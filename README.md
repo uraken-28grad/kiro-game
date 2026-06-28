@@ -6,42 +6,85 @@
 
 Docker を使用して開発環境を構築しています。ホストに Node.js がなくても動作します。
 
+### 初回セットアップ
+
+```bash
+docker compose build
+docker compose run --rm app npm install
+docker compose up -d
+```
+
 ### コマンド
 
 ```bash
-# 依存インストール（初回 & package.json 変更時）
-docker compose run --rm app npm install
-
 # 開発サーバー起動
-docker compose up
-
-# バックグラウンドで起動
 docker compose up -d
+
+# ログ確認
+docker compose logs -f
 
 # 停止
 docker compose down
 
-# プロダクションビルド
-docker compose run --rm app npm run build
+# パッケージ追加
+docker compose run --rm app npm install <パッケージ名>
+
+# package.json 変更後
+docker compose run --rm app npm install
 
 # Lint
 docker compose run --rm app npm run lint
 
-# コンテナ再ビルド（Dockerfile変更時）
-docker compose up --build
+# コンテナに入る
+docker compose exec app sh
+
+# Dockerfile.dev 変更時
+docker compose up -d --build
+
+# node_modules を作り直す
+docker compose down -v
+docker compose build
+docker compose run --rm app npm install
+docker compose up -d
 ```
 
 ### アクセス URL
 
-開発サーバー起動後、以下にアクセス：
-
-- ホーム画面: http://localhost:5173/
-- プレイ画面: http://localhost:5173/play
+http://localhost:5173/
 
 ### 操作方法
 
 - `←` `→` : 左右移動（背景スクロール）
 - `Space` : ジャンプ
+
+## 本番環境
+
+マルチステージビルドで静的ファイルを生成し、nginx で配信します。
+
+### ビルド & 起動
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+### 停止
+
+```bash
+docker compose -f docker-compose.prod.yml down
+```
+
+### アクセス URL
+
+http://localhost/
+
+## Docker 構成
+
+| ファイル | 用途 |
+|---|---|
+| `Dockerfile.dev` | 開発用（node:24-alpine） |
+| `Dockerfile` | 本番用（node:24-alpine → nginx:alpine） |
+| `docker-compose.yml` | 開発用オーケストレーション |
+| `docker-compose.prod.yml` | 本番用オーケストレーション |
 
 ## 技術スタック
 
@@ -62,7 +105,8 @@ docker compose up --build
 | TypeScript | 5.6.3 | 型安全な開発 |
 | Vite | 6.0.1 | ビルド / 開発サーバー |
 | ESLint | 9.15.0 | コード品質チェック |
-| Docker (node:20-alpine) | - | 開発環境コンテナ |
+| Docker (node:24-alpine) | - | 開発・ビルド環境 |
+| nginx (alpine) | - | 本番静的配信 |
 
 ## Kiro について
 

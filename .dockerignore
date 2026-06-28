@@ -1,2 +1,9 @@
 node_modules
 dist
+.git
+.gitignore
+*.md
+Dockerfile*
+docker-compose*
+.dockerignore
+.env*
