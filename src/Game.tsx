@@ -11,6 +11,17 @@ const SPEED = 4
 const GRAVITY = 0.6
 const JUMP_FORCE = -12
 const GROUND_H = 40
+const HAZARD_SPEED = 1.5
+
+/** 動くハザードの状態 */
+interface HazardState {
+  x: number
+  y: number
+  w: number
+  h: number
+  vx: number
+  vy: number
+}
 
 interface GameState {
   screenIndex: number
@@ -27,15 +38,45 @@ function toScreenY(stageY: number, h: number, groundY: number): number {
   return groundY - stageY - h
 }
 
+/** ランダムに左右どちらかの方向を生成 */
+function randomDirection(): { vx: number; vy: number } {
+  return { vx: Math.random() < 0.5 ? HAZARD_SPEED : -HAZARD_SPEED, vy: 0 }
+}
+
+/** ハザードの初期状態を生成（画面座標系） */
+function initHazardStates(screen: Screen, groundY: number): HazardState[] {
+  return screen.hazards.map(h => {
+    const dir = randomDirection()
+    return {
+      x: h.x,
+      y: toScreenY(h.y, h.h, groundY),
+      w: h.w,
+      h: h.h,
+      vx: dir.vx,
+      vy: dir.vy,
+    }
+  })
+}
+
 export function Game({ width, height, stage, onClear }: { width: number; height: number; stage: StageData; onClear?: () => void }) {
   const groundY = height - GROUND_H
   const keys = useRef<Set<string>>(new Set())
   const jumpRequested = useRef(false)
+  const goalReached = useRef(false)
   const [hazardTex, setHazardTex] = useState<Texture | null>(null)
+  const [playerTex, setPlayerTex] = useState<Texture | null>(null)
   const [bgTextures, setBgTextures] = useState<Map<string, Texture>>(new Map())
+
+  // ステージ5以上かどうか
+  const movingHazards = stage.id >= 5
+
+  // 動くハザードの状態を ref で管理（毎フレーム更新するため）
+  const hazardStatesRef = useRef<HazardState[]>([])
+  const [hazardPositions, setHazardPositions] = useState<HazardState[]>([])
 
   useEffect(() => {
     Assets.load<Texture>('/animel.png').then(setHazardTex)
+    Assets.load<Texture>('/animel2.png').then(setPlayerTex)
   }, [])
 
   // Load background textures for all screens
@@ -60,6 +101,16 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
     cleared: false,
   })
 
+  // 画面が変わったらハザード状態を初期化
+  useEffect(() => {
+    if (movingHazards) {
+      const screen = stage.screens[state.screenIndex]
+      const states = initHazardStates(screen, groundY)
+      hazardStatesRef.current = states
+      setHazardPositions([...states])
+    }
+  }, [state.screenIndex, movingHazards, stage, groundY])
+
   useEffect(() => {
     if (state.cleared && onClear) onClear()
   }, [state.cleared, onClear])
@@ -77,6 +128,48 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
   }, [])
 
   const tick = useCallback(() => {
+    // ハザードを動かす（ステージ5以上のみ）
+    if (movingHazards) {
+      const hazards = hazardStatesRef.current
+      if (hazards.length > 0) {
+        // 位置を更新
+        for (const h of hazards) {
+          h.x += h.vx
+        }
+
+        // 壁との衝突判定（画面内に留める）
+        for (const h of hazards) {
+          if (h.x < 0) {
+            h.x = 0
+            h.vx = Math.abs(h.vx)
+          } else if (h.x + h.w > width) {
+            h.x = width - h.w
+            h.vx = -Math.abs(h.vx)
+          }
+        }
+
+        // ハザード同士の衝突判定
+        for (let i = 0; i < hazards.length; i++) {
+          for (let j = i + 1; j < hazards.length; j++) {
+            const a = hazards[i]
+            const b = hazards[j]
+            const overlapX = a.x + a.w > b.x && a.x < b.x + b.w
+            const overlapY = a.y + a.h > b.y && a.y < b.y + b.h
+            if (overlapX && overlapY) {
+              // 方向を反転
+              a.vx = -a.vx
+              b.vx = -b.vx
+              // 重ならないように引き離す
+              a.x += a.vx
+              b.x += b.vx
+            }
+          }
+        }
+
+        setHazardPositions([...hazards])
+      }
+    }
+
     setState(prev => {
       if (prev.dead || prev.cleared) return prev
       let { screenIndex, playerX, playerY, vy, onGround } = prev
@@ -126,13 +219,22 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
         }
       }
 
-      // Hazard collision
-      for (const h of currentScreen.hazards) {
-        const hx = h.x
-        const hy = toScreenY(h.y, h.h, groundY)
-        const overlapX = playerX + PLAYER_W > hx && playerX < hx + h.w
-        const overlapY = playerY + PLAYER_H > hy && playerY < hy + h.h
-        if (overlapX && overlapY) return { ...prev, playerX, playerY, vy, onGround, dead: true }
+      // Hazard collision（動くハザード or 固定ハザード）
+      if (movingHazards) {
+        const hazards = hazardStatesRef.current
+        for (const h of hazards) {
+          const overlapX = playerX + PLAYER_W > h.x && playerX < h.x + h.w
+          const overlapY = playerY + PLAYER_H > h.y && playerY < h.y + h.h
+          if (overlapX && overlapY) return { ...prev, playerX, playerY, vy, onGround, dead: true }
+        }
+      } else {
+        for (const h of currentScreen.hazards) {
+          const hx = h.x
+          const hy = toScreenY(h.y, h.h, groundY)
+          const overlapX = playerX + PLAYER_W > hx && playerX < hx + h.w
+          const overlapY = playerY + PLAYER_H > hy && playerY < hy + h.h
+          if (overlapX && overlapY) return { ...prev, playerX, playerY, vy, onGround, dead: true }
+        }
       }
 
       // Goal collision
@@ -142,7 +244,16 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
         const gy = toScreenY(gl.y, gl.h, groundY)
         const overlapX = playerX + PLAYER_W > gx && playerX < gx + gl.w
         const overlapY = playerY + PLAYER_H > gy && playerY < gy + gl.h
-        if (overlapX && overlapY) return { ...prev, playerX, playerY, vy, onGround, cleared: true }
+        if (overlapX && overlapY) {
+          // ゴール内に入ったら出られない（位置をクランプ）
+          if (playerX < gx) playerX = gx
+          if (playerX + PLAYER_W > gx + gl.w) playerX = gx + gl.w - PLAYER_W
+          if (playerY < gy) playerY = gy
+          if (playerY + PLAYER_H > gy + gl.h) playerY = gy + gl.h - PLAYER_H
+          vy = 0
+          goalReached.current = true
+          return { screenIndex, playerX, playerY, vy, onGround: true, dead: false, cleared: true }
+        }
       }
 
       // Screen transition: right edge
@@ -165,7 +276,7 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
 
       return { screenIndex, playerX, playerY, vy, onGround, dead: false, cleared: false }
     })
-  }, [width, height, groundY, stage])
+  }, [width, height, groundY, stage, movingHazards])
 
   useTick(tick)
 
@@ -193,9 +304,17 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
       }} />
 
       {/* Hazards */}
-      {hazardTex && currentScreen.hazards.map((h, i) => (
-        <pixiSprite key={`hz-${i}`} texture={hazardTex} x={h.x} y={toScreenY(h.y, h.h, groundY)} width={h.w} height={h.h} />
-      ))}
+      {movingHazards ? (
+        // 動くハザード（ステージ5以上）
+        hazardTex && hazardPositions.map((h, i) => (
+          <pixiSprite key={`hz-${i}`} texture={hazardTex} x={h.x} y={h.y} width={h.w} height={h.h} />
+        ))
+      ) : (
+        // 固定ハザード（ステージ1-4）
+        hazardTex && currentScreen.hazards.map((h, i) => (
+          <pixiSprite key={`hz-${i}`} texture={hazardTex} x={h.x} y={toScreenY(h.y, h.h, groundY)} width={h.w} height={h.h} />
+        ))
+      )}
 
       {/* Goal */}
       {currentScreen.goal && (
@@ -208,11 +327,15 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
       )}
 
       {/* Player */}
-      <pixiGraphics
-        draw={(g: Graphics) => { g.clear(); g.rect(0, 0, PLAYER_W, PLAYER_H); g.fill(0x4488ff) }}
-        x={state.playerX}
-        y={state.playerY}
-      />
+      {playerTex ? (
+        <pixiSprite texture={playerTex} x={state.playerX} y={state.playerY} width={PLAYER_W} height={PLAYER_H} />
+      ) : (
+        <pixiGraphics
+          draw={(g: Graphics) => { g.clear(); g.rect(0, 0, PLAYER_W, PLAYER_H); g.fill(0x4488ff) }}
+          x={state.playerX}
+          y={state.playerY}
+        />
+      )}
 
       {/* Dead overlay */}
       {state.dead && (
