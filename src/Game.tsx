@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTick, extend } from '@pixi/react'
 import { Assets, Graphics, Sprite, Texture } from 'pixi.js'
-import { Rect, StageData } from './stages'
+import { Screen, StageData } from './stages/index.ts'
 
 extend({ Sprite })
 
@@ -13,7 +13,8 @@ const JUMP_FORCE = -12
 const GROUND_H = 40
 
 interface GameState {
-  cameraX: number
+  screenIndex: number
+  playerX: number
   playerY: number
   vy: number
   onGround: boolean
@@ -21,29 +22,43 @@ interface GameState {
   cleared: boolean
 }
 
+/** ステージ座標(y=地面上面基準, 上方向正) → 画面座標(y=上端基準, 下方向正) に変換 */
+function toScreenY(stageY: number, h: number, groundY: number): number {
+  return groundY - stageY - h
+}
+
 export function Game({ width, height, stage, onClear }: { width: number; height: number; stage: StageData; onClear?: () => void }) {
   const groundY = height - GROUND_H
-  const world = useRef<{ platforms: Rect[]; hazards: Rect[]; goal: Rect }>({ platforms: stage.platforms(groundY), hazards: stage.hazards(groundY), goal: stage.goal(groundY) })
   const keys = useRef<Set<string>>(new Set())
   const jumpRequested = useRef(false)
   const [hazardTex, setHazardTex] = useState<Texture | null>(null)
+  const [bgTextures, setBgTextures] = useState<Map<string, Texture>>(new Map())
 
   useEffect(() => {
     Assets.load<Texture>('/animel.png').then(setHazardTex)
   }, [])
 
+  // Load background textures for all screens
+  useEffect(() => {
+    const srcs = new Set<string>()
+    for (const screen of stage.screens) {
+      for (const bg of screen.backgrounds) srcs.add(bg.src)
+    }
+    if (srcs.size === 0) return
+    Promise.all([...srcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
+      setBgTextures(new Map(entries))
+    })
+  }, [stage])
+
   const [state, setState] = useState<GameState>({
-    cameraX: stage.playerStart.x,
-    playerY: groundY - PLAYER_H + stage.playerStart.y,
+    screenIndex: 0,
+    playerX: PLAYER_W,
+    playerY: groundY - PLAYER_H,
     vy: 0,
     onGround: true,
     dead: false,
     cleared: false,
   })
-
-  useEffect(() => {
-    world.current = { platforms: stage.platforms(groundY), hazards: stage.hazards(groundY), goal: stage.goal(groundY) }
-  }, [stage, groundY])
 
   useEffect(() => {
     if (state.cleared && onClear) onClear()
@@ -64,86 +79,150 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
   const tick = useCallback(() => {
     setState(prev => {
       if (prev.dead || prev.cleared) return prev
-      let { cameraX, playerY, vy, onGround } = prev
+      let { screenIndex, playerX, playerY, vy, onGround } = prev
+      const currentScreen: Screen = stage.screens[screenIndex]
 
-      if (keys.current.has('ArrowRight')) cameraX += SPEED
-      if (keys.current.has('ArrowLeft')) cameraX -= SPEED
+      // Horizontal movement
+      if (keys.current.has('ArrowRight')) playerX += SPEED
+      if (keys.current.has('ArrowLeft')) playerX -= SPEED
+
+      // Jump
       if (jumpRequested.current && onGround) vy = JUMP_FORCE
       jumpRequested.current = false
 
+      // Gravity
       vy += GRAVITY
       playerY += vy
-
-      const playerScreenX = width / 2 - PLAYER_W / 2
-      const playerWorldX = playerScreenX + cameraX
       onGround = false
 
+      // Ground collision
       if (playerY + PLAYER_H >= groundY) {
         playerY = groundY - PLAYER_H
         vy = 0
         onGround = true
       }
 
-      for (const o of world.current.platforms) {
-        const overlapX = playerWorldX + PLAYER_W > o.x && playerWorldX < o.x + o.w
+      // Platform collision
+      for (const p of currentScreen.platforms) {
+        const px = p.x
+        const py = toScreenY(p.y, p.h, groundY)
+        const overlapX = playerX + PLAYER_W > px && playerX < px + p.w
         if (!overlapX) continue
-        if (prev.playerY + PLAYER_H <= o.y + 1 && playerY + PLAYER_H >= o.y) {
-          playerY = o.y - PLAYER_H; vy = 0; onGround = true
-        } else if (prev.playerY >= o.y + o.h - 1 && playerY < o.y + o.h) {
-          playerY = o.y + o.h; vy = 0
-        } else if (playerY + PLAYER_H > o.y && playerY < o.y + o.h) {
-          cameraX = prev.cameraX
+
+        // Landing on top
+        if (prev.playerY + PLAYER_H <= py + 1 && playerY + PLAYER_H >= py) {
+          playerY = py - PLAYER_H
+          vy = 0
+          onGround = true
+        }
+        // Hitting bottom
+        else if (prev.playerY >= py + p.h - 1 && playerY < py + p.h) {
+          playerY = py + p.h
+          vy = 0
+        }
+        // Side collision
+        else if (playerY + PLAYER_H > py && playerY < py + p.h) {
+          playerX = prev.playerX
         }
       }
 
-      for (const h of world.current.hazards) {
-        const overlapX = playerWorldX + PLAYER_W > h.x && playerWorldX < h.x + h.w
-        const overlapY = playerY + PLAYER_H > h.y && playerY < h.y + h.h
-        if (overlapX && overlapY) return { cameraX, playerY, vy, onGround, dead: true, cleared: false }
+      // Hazard collision
+      for (const h of currentScreen.hazards) {
+        const hx = h.x
+        const hy = toScreenY(h.y, h.h, groundY)
+        const overlapX = playerX + PLAYER_W > hx && playerX < hx + h.w
+        const overlapY = playerY + PLAYER_H > hy && playerY < hy + h.h
+        if (overlapX && overlapY) return { ...prev, playerX, playerY, vy, onGround, dead: true }
       }
 
-      const gl = world.current.goal
-      const goalOverlapX = playerWorldX + PLAYER_W > gl.x && playerWorldX < gl.x + gl.w
-      const goalOverlapY = playerY + PLAYER_H > gl.y && playerY < gl.y + gl.h
-      if (goalOverlapX && goalOverlapY) return { cameraX, playerY, vy, onGround, dead: false, cleared: true }
+      // Goal collision
+      if (currentScreen.goal) {
+        const gl = currentScreen.goal
+        const gx = gl.x
+        const gy = toScreenY(gl.y, gl.h, groundY)
+        const overlapX = playerX + PLAYER_W > gx && playerX < gx + gl.w
+        const overlapY = playerY + PLAYER_H > gy && playerY < gy + gl.h
+        if (overlapX && overlapY) return { ...prev, playerX, playerY, vy, onGround, cleared: true }
+      }
 
-      return { cameraX, playerY, vy, onGround, dead: false, cleared: false }
+      // Screen transition: right edge
+      if (playerX + PLAYER_W > width) {
+        if (screenIndex < stage.screens.length - 1) {
+          return { screenIndex: screenIndex + 1, playerX: 0, playerY: groundY - PLAYER_H, vy: 0, onGround: true, dead: false, cleared: false }
+        } else {
+          playerX = width - PLAYER_W
+        }
+      }
+
+      // Screen transition: left edge
+      if (playerX < 0) {
+        if (screenIndex > 0) {
+          return { screenIndex: screenIndex - 1, playerX: width - PLAYER_W, playerY: groundY - PLAYER_H, vy: 0, onGround: true, dead: false, cleared: false }
+        } else {
+          playerX = 0
+        }
+      }
+
+      return { screenIndex, playerX, playerY, vy, onGround, dead: false, cleared: false }
     })
-  }, [width, groundY])
+  }, [width, height, groundY, stage])
 
   useTick(tick)
 
-  const playerScreenX = width / 2 - PLAYER_W / 2
+  const currentScreen: Screen = stage.screens[state.screenIndex]
 
   return (
     <>
+      {/* Backgrounds */}
+      {currentScreen.backgrounds.map((bg, i) => {
+        const tex = bgTextures.get(bg.src)
+        if (!tex) return null
+        return <pixiSprite key={`bg-${i}`} texture={tex} x={bg.x} y={toScreenY(bg.y, bg.h, groundY)} width={bg.w} height={bg.h} />
+      })}
+
+      {/* Ground */}
       <pixiGraphics draw={(g: Graphics) => { g.clear(); g.rect(0, groundY, width, GROUND_H); g.fill(0x2ecc71) }} />
+
+      {/* Platforms */}
       <pixiGraphics draw={(g: Graphics) => {
         g.clear()
-        for (const o of world.current.platforms) g.rect(o.x - state.cameraX, o.y, o.w, o.h)
+        for (const p of currentScreen.platforms) {
+          g.rect(p.x, toScreenY(p.y, p.h, groundY), p.w, p.h)
+        }
         g.fill(0x8b4513)
       }} />
-      {hazardTex && world.current.hazards.map((h, i) => (
-        <pixiSprite key={i} texture={hazardTex} x={h.x - state.cameraX} y={h.y} width={h.w} height={h.h} />
+
+      {/* Hazards */}
+      {hazardTex && currentScreen.hazards.map((h, i) => (
+        <pixiSprite key={`hz-${i}`} texture={hazardTex} x={h.x} y={toScreenY(h.y, h.h, groundY)} width={h.w} height={h.h} />
       ))}
-      {/* goal */}
-      <pixiGraphics draw={(g: Graphics) => {
-        g.clear()
-        const gl = world.current.goal
-        g.rect(gl.x - state.cameraX, gl.y, gl.w, gl.h)
-        g.fill(0xffd700)
-      }} />
+
+      {/* Goal */}
+      {currentScreen.goal && (
+        <pixiGraphics draw={(g: Graphics) => {
+          g.clear()
+          const gl = currentScreen.goal!
+          g.rect(gl.x, toScreenY(gl.y, gl.h, groundY), gl.w, gl.h)
+          g.fill(0xffd700)
+        }} />
+      )}
+
+      {/* Player */}
       <pixiGraphics
         draw={(g: Graphics) => { g.clear(); g.rect(0, 0, PLAYER_W, PLAYER_H); g.fill(0x4488ff) }}
-        x={playerScreenX}
+        x={state.playerX}
         y={state.playerY}
       />
+
+      {/* Dead overlay */}
       {state.dead && (
         <pixiGraphics draw={(g: Graphics) => {
           g.clear(); g.rect(0, 0, width, height); g.fill({ color: 0x000000, alpha: 0.6 })
           g.rect(width / 2 - 80, height / 2 - 20, 160, 40); g.fill(0xcc0000)
         }} />
       )}
+
+      {/* Cleared overlay */}
       {state.cleared && (
         <pixiGraphics draw={(g: Graphics) => {
           g.clear(); g.rect(0, 0, width, height); g.fill({ color: 0x000000, alpha: 0.6 })
