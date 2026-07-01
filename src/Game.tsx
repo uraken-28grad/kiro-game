@@ -44,14 +44,16 @@ function randomDirection(): { vx: number; vy: number } {
 }
 
 /** ハザードの初期状態を生成（画面座標系） */
-function initHazardStates(screen: Screen, groundY: number): HazardState[] {
+function initHazardStates(screen: Screen, groundY: number, renderSize?: { w: number; h: number }): HazardState[] {
   return screen.hazards.map(h => {
     const dir = randomDirection()
+    const w = renderSize?.w ?? h.w
+    const rh = renderSize?.h ?? h.h
     return {
       x: h.x,
-      y: toScreenY(h.y, h.h, groundY),
-      w: h.w,
-      h: h.h,
+      y: toScreenY(h.y, rh, groundY),
+      w,
+      h: rh,
       vx: dir.vx,
       vy: dir.vy,
     }
@@ -65,7 +67,7 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   const keys = useRef<Set<string>>(new Set())
   const jumpRequested = useRef(false)
   const goalReached = useRef(false)
-  const [hazardTex, setHazardTex] = useState<Texture | null>(null)
+  const [hazardTextures, setHazardTextures] = useState<Map<string, Texture>>(new Map())
   const [playerTex, setPlayerTex] = useState<Texture | null>(null)
   const [bgTextures, setBgTextures] = useState<Map<string, Texture>>(new Map())
 
@@ -77,16 +79,25 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   const [hazardPositions, setHazardPositions] = useState<HazardState[]>([])
 
   useEffect(() => {
-    Assets.load<Texture>(stage.hazardImage ?? '/animal.png').then(setHazardTex)
+    // Load all hazard images (stage-level + screen-level)
+    const hazardSrcs = new Set<string>()
+    hazardSrcs.add(stage.hazardImage ?? '/animal.png')
+    for (const screen of stage.screens) {
+      if (screen.hazardImage) hazardSrcs.add(screen.hazardImage)
+    }
+    Promise.all([...hazardSrcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
+      setHazardTextures(new Map(entries))
+    })
+
     const playerImagePath = stage.playerImage ?? '/animal2.png'
     Assets.load<Texture>(playerImagePath).then(setPlayerTex)
-  }, [stage.playerImage, stage.hazardImage])
+  }, [stage])
 
   // Load background textures for all screens
   useEffect(() => {
     const srcs = new Set<string>()
     for (const screen of stage.screens) {
-      for (const bg of screen.backgrounds) srcs.add(bg.src)
+      if (screen.background) srcs.add(screen.background)
     }
     if (srcs.size === 0) return
     Promise.all([...srcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
@@ -108,7 +119,8 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   useEffect(() => {
     if (movingHazards) {
       const screen = stage.screens[state.screenIndex]
-      const states = initHazardStates(screen, groundY)
+      const hzSize = screen.hazardSize ?? stage.hazardSize
+      const states = initHazardStates(screen, groundY, hzSize)
       hazardStatesRef.current = states
       setHazardPositions([...states])
     }
@@ -227,8 +239,8 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
       }
 
       // Hazard collision（動くハザード or 固定ハザード）
-      const hzW = stage.hazardSize?.w
-      const hzH = stage.hazardSize?.h
+      const hzW = currentScreen.hazardSize?.w ?? stage.hazardSize?.w
+      const hzH = currentScreen.hazardSize?.h ?? stage.hazardSize?.h
       if (movingHazards) {
         const hazards = hazardStatesRef.current
         for (const h of hazards) {
@@ -295,12 +307,10 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
 
   return (
     <>
-      {/* Backgrounds */}
-      {currentScreen.backgrounds.map((bg, i) => {
-        const tex = bgTextures.get(bg.src)
-        if (!tex) return null
-        return <pixiSprite key={`bg-${i}`} texture={tex} x={bg.x} y={toScreenY(bg.y, bg.h, groundY)} width={bg.w} height={bg.h} />
-      })}
+      {/* Background - full screen, fixed, behind everything */}
+      {currentScreen.background && bgTextures.get(currentScreen.background) && (
+        <pixiSprite texture={bgTextures.get(currentScreen.background)!} x={0} y={0} width={width} height={height} />
+      )}
 
       {/* Ground */}
       <pixiGraphics draw={(g: Graphics) => { g.clear(); g.rect(0, groundY, width, GROUND_H); g.fill(0x2ecc71) }} />
@@ -315,19 +325,22 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
       }} />
 
       {/* Hazards */}
-      {movingHazards ? (
-        // 動くハザード（ステージ5以上）
-        hazardTex && hazardPositions.map((h, i) => (
-          <pixiSprite key={`hz-${i}`} texture={hazardTex} x={h.x} y={h.y} width={stage.hazardSize?.w ?? h.w} height={stage.hazardSize?.h ?? h.h} />
-        ))
-      ) : (
-        // 固定ハザード（ステージ1-4）
-        hazardTex && currentScreen.hazards.map((h, i) => {
-          const hw = stage.hazardSize?.w ?? h.w
-          const hh = stage.hazardSize?.h ?? h.h
-          return <pixiSprite key={`hz-${i}`} texture={hazardTex} x={h.x} y={toScreenY(h.y, hh, groundY)} width={hw} height={hh} />
-        })
-      )}
+      {(() => {
+        const hazardImgSrc = currentScreen.hazardImage ?? stage.hazardImage ?? '/animal.png'
+        const hazardTex = hazardTextures.get(hazardImgSrc)
+        const hzSize = currentScreen.hazardSize ?? stage.hazardSize
+        if (movingHazards) {
+          return hazardTex && hazardPositions.map((h, i) => (
+            <pixiSprite key={`hz-${i}`} texture={hazardTex} x={h.x} y={h.y} width={hzSize?.w ?? h.w} height={hzSize?.h ?? h.h} />
+          ))
+        } else {
+          return hazardTex && currentScreen.hazards.map((h, i) => {
+            const hw = hzSize?.w ?? h.w
+            const hh = hzSize?.h ?? h.h
+            return <pixiSprite key={`hz-${i}`} texture={hazardTex} x={h.x} y={toScreenY(h.y, hh, groundY)} width={hw} height={hh} />
+          })
+        }
+      })()}
 
       {/* Goal */}
       {currentScreen.goal && (

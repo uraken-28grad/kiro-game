@@ -1,11 +1,12 @@
-import { StageData } from './index'
+import { StageData } from "./index";
 
 export const stage5: StageData = {
   id: 5,
-  name: 'その他中予',
+  name: "その他南予",
+  playerSize: { w: 100, h: 100 },
+  hazardSize: { w: 100, h: 100 },
   screens: [
     {
-      backgrounds: [],
       platforms: [
         { x: 100, y: 100, w: 55, h: 20 },
         { x: 300, y: 180, w: 50, h: 20 },
@@ -17,7 +18,6 @@ export const stage5: StageData = {
       ],
     },
     {
-      backgrounds: [],
       platforms: [
         { x: 80, y: 130, w: 50, h: 20 },
         { x: 240, y: 200, w: 50, h: 20 },
@@ -31,7 +31,6 @@ export const stage5: StageData = {
       ],
     },
     {
-      backgrounds: [],
       platforms: [
         { x: 100, y: 90, w: 50, h: 20 },
         { x: 280, y: 170, w: 50, h: 20 },
@@ -44,7 +43,6 @@ export const stage5: StageData = {
       ],
     },
     {
-      backgrounds: [],
       platforms: [
         { x: 80, y: 110, w: 50, h: 20 },
         { x: 260, y: 190, w: 50, h: 20 },
@@ -57,7 +55,6 @@ export const stage5: StageData = {
       ],
     },
     {
-      backgrounds: [],
       platforms: [
         { x: 100, y: 100, w: 50, h: 20 },
         { x: 300, y: 200, w: 50, h: 20 },
@@ -70,4 +67,4 @@ export const stage5: StageData = {
       goal: { x: 620, y: 0, w: 30, h: 60 },
     },
   ],
-}
+};
