@@ -27,6 +27,8 @@ export interface StageData {
   id: number
   name: string
   screens: Screen[]
+  /** ステージ固有のプレイヤー画像パス（未指定時はデフォルト画像を使用） */
+  playerImage?: string
 }
 
 import { stage1 } from './stage1'

@@ -3,6 +3,7 @@ import { StageData } from './index'
 export const stage4: StageData = {
   id: 4,
   name: '松山城',
+  playerImage: '/matsuyama-castle/jiki_busi.png',
   screens: [
     {
       backgrounds: [],

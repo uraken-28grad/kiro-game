@@ -76,8 +76,9 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
 
   useEffect(() => {
     Assets.load<Texture>('/animal.png').then(setHazardTex)
-    Assets.load<Texture>('/animal2.png').then(setPlayerTex)
-  }, [])
+    const playerImagePath = stage.playerImage ?? '/animal2.png'
+    Assets.load<Texture>(playerImagePath).then(setPlayerTex)
+  }, [stage.playerImage])
 
   // Load background textures for all screens
   useEffect(() => {
