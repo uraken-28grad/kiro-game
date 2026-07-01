@@ -14,8 +14,10 @@ function Play() {
   const [size, setSize] = useState({ w: window.innerWidth / 2, h: window.innerHeight / 2 })
   const [key, setKey] = useState(0)
   const [cleared, setCleared] = useState(false)
+  const [deathCount, setDeathCount] = useState(0)
 
   const handleClear = useCallback(() => setCleared(true), [])
+  const handleDeath = useCallback(() => setDeathCount(c => c + 1), [])
 
   useEffect(() => {
     const onResize = () => setSize({ w: window.innerWidth / 2, h: window.innerHeight / 2 })
@@ -27,10 +29,10 @@ function Play() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', position: 'relative' }}>
-      <p style={{ margin: '0 0 8px' }}>Stage {stage.id}: {stage.name}</p>
+      <p style={{ margin: '0 0 8px' }}>Stage {stage.id}: {stage.name} | 💀 {deathCount}</p>
       <div style={{ position: 'relative' }}>
         <Application width={size.w} height={size.h} background={0x87ceeb}>
-          <Game key={key} width={size.w} height={size.h} stage={stage} onClear={handleClear} />
+          <Game key={key} width={size.w} height={size.h} stage={stage} onClear={handleClear} onDeath={handleDeath} />
         </Application>
         {cleared && (
           <div style={{

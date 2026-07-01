@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTick, extend } from '@pixi/react'
 import { Assets, Graphics, Sprite, Texture } from 'pixi.js'
 import { Screen, StageData } from './stages/index.ts'
+import { useGeysers, GeyserSprites } from './geysers'
 
 extend({ Sprite })
 
@@ -58,7 +59,7 @@ function initHazardStates(screen: Screen, groundY: number): HazardState[] {
   })
 }
 
-export function Game({ width, height, stage, onClear }: { width: number; height: number; stage: StageData; onClear?: () => void }) {
+export function Game({ width, height, stage, onClear, onDeath }: { width: number; height: number; stage: StageData; onClear?: () => void; onDeath?: () => void }) {
   const playerW = stage.playerSize?.w ?? DEFAULT_PLAYER_W
   const playerH = stage.playerSize?.h ?? DEFAULT_PLAYER_H
   const groundY = height - GROUND_H
@@ -104,6 +105,18 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
     cleared: false,
   })
 
+  // playerXをrefで追跡（tick内でgeyserTickに渡すため）
+  const playerXRef = useRef(playerW)
+  playerXRef.current = state.playerX
+
+  // 間欠泉hook: 現在の画面のgeysers定義を渡す
+  const geyserDefs = useMemo(
+    () => stage.screens[state.screenIndex]?.geysers ?? [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stage, state.screenIndex]
+  )
+  const { activeGeysers, tick: geyserTick, checkCollision: checkGeyserCollision } = useGeysers(geyserDefs)
+
   // 画面が変わったらハザード状態を初期化
   useEffect(() => {
     if (movingHazards) {
@@ -119,6 +132,10 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
   }, [state.cleared, onClear])
 
   useEffect(() => {
+    if (state.dead && onDeath) onDeath()
+  }, [state.dead, onDeath])
+
+  useEffect(() => {
     const down = (e: KeyboardEvent) => {
       e.preventDefault()
       keys.current.add(e.key)
@@ -131,6 +148,9 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
   }, [])
 
   const tick = useCallback(() => {
+    // 間欠泉のサイクルを更新
+    geyserTick(playerXRef.current)
+
     // ハザードを動かす（ステージ5以上のみ）
     if (movingHazards) {
       const hazards = hazardStatesRef.current
@@ -244,6 +264,11 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
         }
       }
 
+      // Geyser collision（間欠泉：噴出中のみ当たり判定あり）
+      if (checkGeyserCollision(playerX, playerY, playerW, playerH, groundY)) {
+        return { ...prev, playerX, playerY, vy, onGround, dead: true }
+      }
+
       // Goal collision
       if (currentScreen.goal) {
         const gl = currentScreen.goal
@@ -283,7 +308,7 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
 
       return { screenIndex, playerX, playerY, vy, onGround, dead: false, cleared: false }
     })
-  }, [width, height, groundY, stage, movingHazards, playerW, playerH])
+  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision])
 
   useTick(tick)
 
@@ -333,6 +358,11 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
           g.rect(gl.x, toScreenY(gl.y, gl.h, groundY), gl.w, gl.h)
           g.fill(0xffd700)
         }} />
+      )}
+
+      {/* Geysers */}
+      {stage.geyserImage && (
+        <GeyserSprites activeGeysers={activeGeysers} imagePath={stage.geyserImage} groundY={groundY} />
       )}
 
       {/* Player */}

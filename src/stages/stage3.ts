@@ -3,6 +3,7 @@ import { StageData } from './index'
 export const stage3: StageData = {
   id: 3,
   name: '道後温泉',
+  geyserImage: '/matsuyama-dogo/teki/kanketu.png',
   screens: [
     {
       backgrounds: [],
@@ -13,6 +14,9 @@ export const stage3: StageData = {
       ],
       hazards: [
         { x: 230, y: 0, w: 20, h: 20 },
+      ],
+      geysers: [
+        { x: 400, y: 0, w: 40, h: 80, interval: 120, duration: 60, delay: 0 },
       ],
     },
     {
@@ -27,6 +31,10 @@ export const stage3: StageData = {
         { x: 170, y: 0, w: 20, h: 20 },
         { x: 360, y: 0, w: 20, h: 20 },
       ],
+      geysers: [
+        { x: 200, y: 0, w: 40, h: 80, interval: 100, duration: 50, delay: 0 },
+        { x: 500, y: 0, w: 40, h: 80, interval: 100, duration: 50, delay: 50 },
+      ],
     },
     {
       backgrounds: [],
@@ -38,6 +46,10 @@ export const stage3: StageData = {
       hazards: [
         { x: 200, y: 0, w: 20, h: 20 },
         { x: 380, y: 0, w: 20, h: 20 },
+      ],
+      geysers: [
+        { x: 150, y: 0, w: 40, h: 100, interval: 90, duration: 60, delay: 30 },
+        { x: 400, y: 0, w: 40, h: 100, interval: 90, duration: 60, delay: 0 },
       ],
     },
     {
@@ -51,6 +63,13 @@ export const stage3: StageData = {
         { x: 210, y: 0, w: 20, h: 20 },
         { x: 420, y: 0, w: 20, h: 20 },
       ],
+      geysers: [
+        // 初見殺し: 下ルートをある程度進む(x=120超え)と即噴出
+        { x: 150, y: 0, w: 40, h: 80, interval: 1, duration: 9999, delay: 0, triggerX: 120 },
+        { x: 250, y: 0, w: 40, h: 80, interval: 1, duration: 9999, delay: 0, triggerX: 120 },
+        { x: 350, y: 0, w: 40, h: 80, interval: 1, duration: 9999, delay: 0, triggerX: 120 },
+        { x: 450, y: 0, w: 40, h: 80, interval: 1, duration: 9999, delay: 0, triggerX: 120 },
+      ],
     },
     {
       backgrounds: [],
@@ -61,6 +80,9 @@ export const stage3: StageData = {
       hazards: [
         { x: 230, y: 0, w: 20, h: 20 },
         { x: 450, y: 0, w: 20, h: 20 },
+      ],
+      geysers: [
+        { x: 350, y: 0, w: 40, h: 100, interval: 90, duration: 55, delay: 20 },
       ],
       goal: { x: 580, y: 0, w: 30, h: 60 },
     },
