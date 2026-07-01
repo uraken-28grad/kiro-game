@@ -3,6 +3,9 @@ import { StageData } from './index'
 export const stage1: StageData = {
   id: 1,
   name: '四国中央・新居浜',
+  playerSize: {w: 100, h: 100},
+  hazardSize: {w: 100, h:100},
+
   screens: [
     {
       backgrounds: [
