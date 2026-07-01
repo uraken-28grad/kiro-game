@@ -3,13 +3,15 @@ import { StageData } from './index'
 export const stage1: StageData = {
   id: 1,
   name: '四国中央・新居浜',
+  playerImage: "/niihama/teki/hashiteruinu.png",
   playerSize: {w: 100, h: 100},
+  hazardImage: "/niihama/teki/dou.png",
   hazardSize: {w: 100, h:100},
 
   screens: [
     {
       backgrounds: [
-        { src: '/niihama/bessiClear.jpg', x: 0, y: 0, w: 800, h: 400 },
+        { src: '/niihama/shikokuchuo-kawanoejou.jpg', x: 0, y: 0, w: 1000, h: 500 },
       ],
       platforms: [
         { x: 200, y: 50, w: 120, h: 20 },
@@ -18,7 +20,9 @@ export const stage1: StageData = {
       hazards: [],
     },
     {
-      backgrounds: [],
+      backgrounds: [
+        { src: '/niihama/shikokuchuo-tomisatokeikoku.jpg', x: 0, y: 0, w: 1000, h: 500 },
+      ],
       platforms: [
         { x: 150, y: 60, w: 100, h: 20 },
         { x: 350, y: 100, w: 100, h: 20 },
@@ -29,7 +33,9 @@ export const stage1: StageData = {
       ],
     },
     {
-      backgrounds: [],
+      backgrounds: [
+        { src: '/niihama/bessi.jpg', x: 0, y: 0, w: 1000, h: 500 },
+      ],
       platforms: [
         { x: 100, y: 70, w: 100, h: 20 },
         { x: 300, y: 120, w: 100, h: 20 },
@@ -40,7 +46,9 @@ export const stage1: StageData = {
       ],
     },
     {
-      backgrounds: [],
+      backgrounds: [
+        { src: '/niihama/niihama-Minetopia-1.jpg', x: 0, y: 0, w: 1000, h: 600 },
+      ],
       platforms: [
         { x: 150, y: 80, w: 100, h: 20 },
         { x: 400, y: 130, w: 100, h: 20 },

@@ -2,7 +2,7 @@ import { StageData } from './index'
 
 export const stage7: StageData = {
   id: 7,
-  name: 'その他南予',
+  name: '道後温泉',
   screens: [
     {
       backgrounds: [],

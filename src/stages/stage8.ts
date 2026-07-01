@@ -2,7 +2,7 @@ import { StageData } from './index'
 
 export const stage8: StageData = {
   id: 8,
-  name: 'お祭り',
+  name: '松山城',
   screens: [
     {
       backgrounds: [],

@@ -39,11 +39,11 @@ export interface StageData {
 
 import { stage1 } from './stage1' //四国中央 新居浜
 import { stage2 } from './stage2' //今治 西条
-import { stage3 } from './stage3' //道後温泉
-import { stage4 } from './stage4' //松山城
+import { stage3 } from './stage3' //お祭り
+import { stage4 } from './stage4' //その他南予
 import { stage5 } from './stage5' //その他中予
 import { stage6 } from './stage6' //宇和島 愛南
-import { stage7 } from './stage7' //その他南予
-import { stage8 } from './stage8' //お祭り
+import { stage7 } from './stage7' //道後温泉
+import { stage8 } from './stage8' //松山城
 
 export const stages: StageData[] = [stage1, stage2, stage3, stage4, stage5, stage6, stage7, stage8]
