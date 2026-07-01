@@ -58,7 +58,7 @@ function initHazardStates(screen: Screen, groundY: number): HazardState[] {
   })
 }
 
-export function Game({ width, height, stage, onClear }: { width: number; height: number; stage: StageData; onClear?: () => void }) {
+export function Game({ width, height, stage, onClear, onDeath }: { width: number; height: number; stage: StageData; onClear?: () => void; onDeath?: () => void }) {
   const playerW = stage.playerSize?.w ?? DEFAULT_PLAYER_W
   const playerH = stage.playerSize?.h ?? DEFAULT_PLAYER_H
   const groundY = height - GROUND_H
@@ -117,6 +117,10 @@ export function Game({ width, height, stage, onClear }: { width: number; height:
   useEffect(() => {
     if (state.cleared && onClear) onClear()
   }, [state.cleared, onClear])
+
+  useEffect(() => {
+    if (state.dead && onDeath) onDeath()
+  }, [state.dead, onDeath])
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
