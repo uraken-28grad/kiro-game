@@ -1,6 +1,11 @@
 FROM node:24-alpine
 
-WORKDIR /app
+USER root
+RUN chown -R node:node /home/node/
+
+USER node
+WORKDIR /home/node/app
+ENV HOME=/home/node
 
 EXPOSE 5173
 
