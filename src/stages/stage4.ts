@@ -19,6 +19,8 @@ export const stage4: StageData = {
         // { x: 190, y: 0, w: 25, h: 20 },
         { x: 380, y: 0, w: 25, h: 20 },
       ],
+      deathMessage:
+        "坊ちゃん劇場\n東温市にあるハイレベルなミュージカル劇場\n歴史や偉人をテーマにした作品を上演している",
     },
     {
       background: "/chu-yo/Shimonada.jpg",
@@ -33,6 +35,8 @@ export const stage4: StageData = {
         // { x: 340, y: 0, w: 25, h: 20 },
         { x: 510, y: 0, w: 25, h: 20 },
       ],
+      deathMessage:
+        "下灘駅\n松山駅から1時間、海を見ることができる駅\n数々のドラマや映画のロケ地として有名",
     },
     {
       background: "/chu-yo/kuma-kogen.jpg",
@@ -45,6 +49,8 @@ export const stage4: StageData = {
         { x: 200, y: 0, w: 25, h: 20 },
         { x: 410, y: 0, w: 25, h: 20 },
       ],
+      deathMessage:
+        "久万高原町にある日本三大カルストのひとつ\n美しい風景や高山植物を楽しむことができる",
     },
     {
       platforms: [

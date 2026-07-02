@@ -20,6 +20,7 @@ export const stage6: StageData = {
         // { x: 390, y: 0, w: 25, h: 20 },
         { x: 560, y: 0, w: 25, h: 20 },
       ],
+      deathMessage: "高茂岬\n海の雄大さを感じれる\nとてつもなく絶景",
     },
     {
       background: "/uwajima/kurobae.jpg",
@@ -34,6 +35,8 @@ export const stage6: StageData = {
         // { x: 330, y: 0, w: 25, h: 20 },
         { x: 500, y: 0, w: 25, h: 20 },
       ],
+      deathMessage:
+        "宇和島港戎山防波場灯台\n宇和島湾最奥部に位置している\n海を照らす灯台",
     },
     {
       background: "/uwajima/uwajima_castle.jpg",
@@ -47,6 +50,8 @@ export const stage6: StageData = {
         // { x: 370, y: 0, w: 25, h: 20 },
         { x: 540, y: 0, w: 25, h: 20 },
       ],
+      deathMessage:
+        "宇和島城\n宇和島の中心部に位置するお城\n安土桃山時代に築かれた",
     },
     {
       background: "/uwajima/yuzumizugaura.jpg",
@@ -60,6 +65,7 @@ export const stage6: StageData = {
         // { x: 370, y: 0, w: 25, h: 20 },
         { x: 550, y: 0, w: 25, h: 20 },
       ],
+      deathMessage: "遊子水荷浦の段畑\n宇和海と一緒の絶景が楽しめる",
       goal: { x: 620, y: 0, w: 30, h: 60 },
     },
   ],
