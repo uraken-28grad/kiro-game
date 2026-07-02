@@ -7,11 +7,24 @@ import { stages } from './stages'
 
 extend({ Container, Graphics })
 
+function calcSize() {
+  const maxW = window.innerWidth * 0.9
+  const maxH = window.innerHeight * 0.8
+  // 4:3 横画面比率
+  let w = maxW
+  let h = w * 3 / 4
+  if (h > maxH) {
+    h = maxH
+    w = h * 4 / 3
+  }
+  return { w: Math.floor(w), h: Math.floor(h) }
+}
+
 function Play() {
   const { stageId } = useParams()
   const navigate = useNavigate()
   const stage = stages.find(s => s.id === Number(stageId)) ?? stages[0]
-  const [size, setSize] = useState({ w: window.innerWidth / 2, h: window.innerHeight / 2 })
+  const [size, setSize] = useState(calcSize)
   const [key, setKey] = useState(0)
   const [cleared, setCleared] = useState(false)
   const [deathCount, setDeathCount] = useState(0)
@@ -20,7 +33,7 @@ function Play() {
   const handleDeath = useCallback(() => setDeathCount(c => c + 1), [])
 
   useEffect(() => {
-    const onResize = () => setSize({ w: window.innerWidth / 2, h: window.innerHeight / 2 })
+    const onResize = () => setSize(calcSize())
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
