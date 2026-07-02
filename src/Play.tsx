@@ -51,11 +51,37 @@ function Play() {
           <div style={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
             display: 'flex', justifyContent: 'center', alignItems: 'center',
-            background: 'rgba(0,0,0,0.6)', pointerEvents: 'none',
+            background: 'rgba(0,0,0,0.6)',
           }}>
-            <p style={{ color: '#ffd700', fontSize: 36, fontWeight: 'bold', textAlign: 'center' }}>
-              GOAL!<br />Congratulations!
-            </p>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ color: '#ffd700', fontSize: 36, fontWeight: 'bold', margin: '0 0 12px' }}>
+                GOAL!<br />Congratulations!
+              </p>
+              <p style={{ color: '#fff', fontSize: 20, margin: '0 0 8px' }}>
+                Stage {stage.id}: {stage.name}
+              </p>
+              <p style={{ color: '#fff', fontSize: 20, margin: '0 0 16px' }}>
+                💀 死亡数: {deathCount}
+              </p>
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【Kiro Game】ステージ${stage.id}「${stage.name}」を死亡数${deathCount}回でクリアしました！`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-block',
+                  padding: '10px 20px',
+                  backgroundColor: '#1da1f2',
+                  color: '#fff',
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  borderRadius: 6,
+                  textDecoration: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                結果をツイートする
+              </a>
+            </div>
           </div>
         )}
       </div>
