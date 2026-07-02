@@ -7,6 +7,8 @@ export const stage4: StageData = {
   playerSize: { w: 100, h: 100 },
   hazardImage: "/chu-yo/teki/koi_takinobori.png",
   hazardSize: { w: 100, h: 100 },
+  goalImage: "/goal-flag.png",
+  goalSize: { w: 50, h: 50 },
   screens: [
     {
       background: "/chu-yo/botchan.jpg",
@@ -53,6 +55,7 @@ export const stage4: StageData = {
         "久万高原町にある日本三大カルストのひとつ\n美しい風景や高山植物を楽しむことができる",
     },
     {
+      background: "/chu-yo/kumakougen_omogokei.jpg",
       platforms: [
         { x: 80, y: 100, w: 55, h: 20 },
         { x: 260, y: 180, w: 55, h: 20 },
@@ -63,8 +66,11 @@ export const stage4: StageData = {
         // { x: 350, y: 0, w: 25, h: 20 },
         { x: 520, y: 0, w: 25, h: 20 },
       ],
+      deathMessage:
+        "久万高原町にある面河渓\n様々な四季が楽しめる\n川がとても透明で綺麗",
     },
     {
+      background: "/chu-yo/masaki_darumayuhi.jpg",
       platforms: [
         { x: 120, y: 90, w: 55, h: 20 },
         { x: 320, y: 160, w: 55, h: 20 },
@@ -74,6 +80,7 @@ export const stage4: StageData = {
         { x: 230, y: 0, w: 25, h: 20 },
         { x: 430, y: 0, w: 25, h: 20 },
       ],
+      deathMessage: "松前町で運が良ければ見れるだるま夕日\n水平線に溶け込むロマンチックな夕日を恋人とご覧あれ",
       goal: { x: 620, y: 0 },
     },
   ],
