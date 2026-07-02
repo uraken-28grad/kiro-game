@@ -7,7 +7,7 @@ export const stage1: StageData = {
   playerSize: { w: 100, h: 100 },
   hazardSize: { w: 100, h: 100 },
   goalImage: "/goal-flag.png",
-  goalSize: { w: 50, h: 50 },
+  goalSize: { w: 100, h: 100 },
 
   screens: [
     {

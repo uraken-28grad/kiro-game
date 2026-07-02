@@ -6,6 +6,8 @@ export const stage2: StageData = {
   playerImage: "/imabari/jiki_AItaoru_clear.png",
   playerSize: { w: 100, h: 100 },
   hazardSize: { w: 100, h: 100 },
+  goalImage: "/goal-flag.png",
+  goalSize: { w: 50, h: 50 },
   screens: [
     {
       background: "/imabari/saijou_jinja.jpg",

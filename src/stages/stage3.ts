@@ -6,6 +6,8 @@ export const stage3: StageData = {
   playerImage: "/festival/jiki_mikoshi.png",
   playerSize: { w: 100, h: 100 },
   hazardSize: { w: 100, h: 100 },
+  goalImage: "/goal-flag.png",
+  goalSize: { w: 50, h: 50 },
   screens: [
     {
       background: "/festival/iyo_mishima.jpg",

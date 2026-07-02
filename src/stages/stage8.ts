@@ -6,6 +6,8 @@ export const stage8: StageData = {
   playerImage: "/matsuyama-castle/jiki_bushi.png",
   playerSize: { w: 70, h: 100 },
   hazardSize: { w: 50, h: 70 },
+  goalImage: "/goal-flag.png",
+  goalSize: { w: 50, h: 50 },
   screens: [
     {
       background: "/matsuyama-castle/siro_tien3.jpg",

@@ -7,6 +7,8 @@ export const stage7: StageData = {
   playerSize: { w: 70, h: 100 },
   hazardImage: "/matsuyama-dogo/teki/kanketu.png",
   hazardSize: { w: 50, h: 70 },
+  goalImage: "/goal-flag.png",
+  goalSize: { w: 50, h: 50 },
   screens: [
     {
       background: "/matsuyama-dogo/dougo_ashiyu.jpg",

@@ -7,6 +7,8 @@ export const stage6: StageData = {
   playerSize: { w: 100, h: 70 },
   hazardImage: "/uwajima/teki/animal_bull_kowai.png",
   hazardSize: { w: 70, h: 70 },
+  goalImage: "/goal-flag.png",
+  goalSize: { w: 50, h: 50 },
   screens: [
     {
       background: "/uwajima/komomisaki.jpg",
