@@ -3,10 +3,11 @@ import { StageData } from "./index";
 export const stage5: StageData = {
   id: 5,
   name: "その他南予",
-  playerSize: { w: 100, h: 100 },
-  hazardSize: { w: 100, h: 100 },
+  playerSize: { w: 50, h: 50 },
+  hazardSize: { w: 50, h: 50 },
   screens: [
     {
+      background: "/nan-yo/Uchikoza.jpg",
       platforms: [
         { x: 100, y: 100, w: 55, h: 20 },
         { x: 300, y: 180, w: 50, h: 20 },
@@ -18,6 +19,7 @@ export const stage5: StageData = {
       ],
     },
     {
+      background: "/nan-yo/nyohoji3.jpg",
       platforms: [
         { x: 80, y: 130, w: 50, h: 20 },
         { x: 240, y: 200, w: 50, h: 20 },
@@ -31,6 +33,7 @@ export const stage5: StageData = {
       ],
     },
     {
+      background: "/nan-yo/Ozu_Castle,_tenshu-1.jpg",
       platforms: [
         { x: 100, y: 90, w: 50, h: 20 },
         { x: 280, y: 170, w: 50, h: 20 },
@@ -43,6 +46,7 @@ export const stage5: StageData = {
       ],
     },
     {
+      background: "/nan-yo/Kachidoki_JFA_Yawahahama_20090812.jpg",
       platforms: [
         { x: 80, y: 110, w: 50, h: 20 },
         { x: 260, y: 190, w: 50, h: 20 },
@@ -55,6 +59,37 @@ export const stage5: StageData = {
       ],
     },
     {
+      background: "/nan-yo/Sadamisaki_hantou_01.jpg",
+      platforms: [
+        { x: 80, y: 80, w: 50, h: 20 },
+        { x: 260, y: 190, w: 50, h: 20 },
+        { x: 440, y: 110, w: 50, h: 20 },
+      ],
+      hazards: [
+      ],
+    },
+    {
+      background: "/nan-yo/Meijihasi_yawatahamasi.jpg",
+      platforms: [
+        { x: 80, y: 110, w: 50, h: 20 },
+        { x: 260, y: 190, w: 50, h: 20 },
+        { x: 440, y: 110, w: 50, h: 20 },
+      ],
+      hazards: [
+      ],
+    },
+    {
+      background: "/nan-yo/Unomachi_town_b.jpg",
+      platforms: [
+        { x: 80, y: 110, w: 50, h: 20 },
+        { x: 260, y: 190, w: 50, h: 20 },
+        { x: 440, y: 110, w: 50, h: 20 },
+      ],
+      hazards: [
+      ],
+    },
+    {
+      background: "/nan-yo/yukiwanotaki.jpg",
       platforms: [
         { x: 100, y: 100, w: 50, h: 20 },
         { x: 300, y: 200, w: 50, h: 20 },
