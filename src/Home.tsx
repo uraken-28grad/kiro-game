@@ -36,7 +36,15 @@ function Home() {
             <button
               key={s.id}
               onClick={() => navigate(`/play/${s.id}`)}
-              style={{ padding: "10px 32px", fontSize: 16, cursor: "pointer" }}
+              style={{
+                padding: "10px 32px",
+                fontSize: 16,
+                cursor: "pointer",
+                background: "rgba(255, 255, 255, 0.6)",
+                border: "1px solid rgba(255, 255, 255, 0.8)",
+                borderRadius: 4,
+                backdropFilter: "blur(4px)",
+              }}
             >
               Stage {s.id}: {s.name}
             </button>
