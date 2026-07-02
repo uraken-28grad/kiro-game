@@ -130,7 +130,7 @@ export const stage7: StageData = {
         { x: 530, y: 0, w: 25, h: 20 },
       ],
       deathMessage: "松山市にある道後温泉\n外観は趣があって個人的に好き",
-      goal: { x: 620, y: 0, w: 30, h: 60 },
+      goal: { x: 620, y: 0 },
     },
   ],
 };
