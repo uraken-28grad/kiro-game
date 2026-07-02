@@ -7,11 +7,14 @@ function Home() {
     <div
       style={{
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        gap: 16,
       }}
     >
+      <h1>Kiro Game</h1>
       <div
         style={{
           display: "flex",
@@ -28,7 +31,6 @@ function Home() {
           borderRadius: 8,
         }}
       >
-        <h1>Kiro Game</h1>
         <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
           {stages.map((s) => (
             <button
