@@ -59,7 +59,7 @@ export const stage2: StageData = {
       ],
       deathMessage:
         "今治市、しまなみ海道の来島海峡大橋\n夕暮れ時の幻想的な景色が綺麗らしい\n展望館から渦潮が見下ろせる",
-      goal: { x: 620, y: 0, w: 30, h: 60 },
+      goal: { x: 620, y: 0 },
     },
   ],
 };

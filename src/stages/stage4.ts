@@ -74,7 +74,7 @@ export const stage4: StageData = {
         { x: 230, y: 0, w: 25, h: 20 },
         { x: 430, y: 0, w: 25, h: 20 },
       ],
-      goal: { x: 620, y: 0, w: 30, h: 60 },
+      goal: { x: 620, y: 0 },
     },
   ],
 };

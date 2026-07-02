@@ -78,7 +78,7 @@ export const stage3: StageData = {
       ],
       deathMessage:
         "西条祭り\n西条市で10/15～10/17に行われる\n深夜に集まるだんじりや神輿、太鼓台がとても綺麗",
-      goal: { x: 580, y: 0, w: 30, h: 60 },
+      goal: { x: 580, y: 0 },
     },
   ],
 };

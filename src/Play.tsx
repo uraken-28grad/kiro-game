@@ -57,6 +57,11 @@ function Play() {
               <p style={{ color: '#ffd700', fontSize: 36, fontWeight: 'bold', margin: '0 0 12px' }}>
                 GOAL!<br />Congratulations!
               </p>
+              {stage.screens.find(s => s.goal)?.clearMessage && (
+                <p style={{ color: '#fff', fontSize: 18, margin: '0 0 12px' }}>
+                  {stage.screens.find(s => s.goal)?.clearMessage}
+                </p>
+              )}
               <p style={{ color: '#fff', fontSize: 20, margin: '0 0 8px' }}>
                 Stage {stage.id}: {stage.name}
               </p>

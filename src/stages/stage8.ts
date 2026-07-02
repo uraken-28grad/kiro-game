@@ -147,7 +147,7 @@ export const stage8: StageData = {
         { x: 530, y: 0, w: 25, h: 20 },
         { x: 600, y: 0, w: 25, h: 20 },
       ],
-      goal: { x: 640, y: 0, w: 30, h: 60 },
+      goal: { x: 640, y: 0 },
       deathMessage: "遠くから見た松山城\nこの距離の写真からでも迫力を感じる",
     },
   ],

@@ -20,8 +20,10 @@ export interface Screen {
   hazardSize?: { w: number; h: number }
   /** ゲームオーバー時に表示するメッセージ（未指定時はデフォルトメッセージ） */
   deathMessage?: string
-  /** 最終画面のゴール（任意） */
-  goal?: Rect
+  /** ゴール時に表示するメッセージ（未指定時は空） */
+  clearMessage?: string
+  /** 最終画面のゴール座標（任意。サイズはStageData.goalSizeで指定） */
+  goal?: { x: number; y: number }
 }
 
 export interface StageData {
@@ -36,6 +38,10 @@ export interface StageData {
   hazardImage?: string
   /** ステージ固有のハザード描画サイズ（未指定時は各hazardのw,hをそのまま使用） */
   hazardSize?: { w: number; h: number }
+  /** ステージ固有のゴール画像パス（未指定時は金色矩形で描画） */
+  goalImage?: string
+  /** ステージ固有のゴール描画サイズ（未指定時はデフォルト 30x60） */
+  goalSize?: { w: number; h: number }
   /** 間欠泉画像パス（geysers使用時） */
   geyserImage?: string
 }

@@ -6,6 +6,8 @@ export const stage1: StageData = {
   playerImage: "/niihama/teki/hashiteruinu.png",
   playerSize: { w: 100, h: 100 },
   hazardSize: { w: 100, h: 100 },
+  goalImage: "/goal-flag.png",
+  goalSize: { w: 50, h: 50 },
 
   screens: [
     {
@@ -51,7 +53,8 @@ export const stage1: StageData = {
       ],
       hazards: [{ x: 300, y: 0, w: 20, h: 20 }],
       deathMessage: "四国中央市にある川之江城\n天守閣からは絶景が見れるらしい",
-      goal: { x: 600, y: 0, w: 30, h: 60 },
+      clearMessage: "おめでとう",
+      goal: { x: 600, y: 0 },
     },
   ],
 };
