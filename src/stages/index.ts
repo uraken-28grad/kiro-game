@@ -18,6 +18,8 @@ export interface Screen {
   hazardImage?: string
   /** この画面のハザード描画サイズ（未指定時はステージのhazardSizeを使用） */
   hazardSize?: { w: number; h: number }
+  /** ゲームオーバー時に表示するメッセージ（未指定時はデフォルトメッセージ） */
+  deathMessage?: string
   /** 最終画面のゴール（任意） */
   goal?: Rect
 }

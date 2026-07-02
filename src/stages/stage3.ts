@@ -16,12 +16,14 @@ export const stage3: StageData = {
         { x: 530, y: 80, w: 80, h: 20 },
       ],
       hazards: [{ x: 230, y: 0, w: 20, h: 20 }],
+      deathMessage:
+        "伊予三島秋祭り\n四国中央市で10/20〜10/23に行われる\n三島太鼓台統一寄せが見物(だと思う)",
     },
     {
       background: "/festival/taiko.jpg",
       hazardImage: "/festival/teki/omatsuri_happi_girl.png",
       platforms: [
-        { x: 80, y: 100, w: 70, h: 20 },
+        { x: 100, y: 80, w: 70, h: 20 },
         { x: 260, y: 160, w: 70, h: 20 },
         { x: 440, y: 100, w: 70, h: 20 },
         { x: 600, y: 160, w: 70, h: 20 },
@@ -30,12 +32,14 @@ export const stage3: StageData = {
         { x: 170, y: 0, w: 20, h: 20 },
         { x: 360, y: 0, w: 20, h: 20 },
       ],
+      deathMessage:
+        "新居浜太鼓祭り\n新居浜市で10/16～10/18に行われる\nとてつもない迫力があり素晴らしい。夜太鼓もとても綺麗",
     },
     {
       background: "/festival/uwajima_matsuri.jpg",
       hazardImage: "/festival/teki/omatsuri_happi_boy.png",
       platforms: [
-        { x: 100, y: 120, w: 70, h: 20 },
+        { x: 150, y: 80, w: 70, h: 20 },
         { x: 280, y: 180, w: 70, h: 20 },
         { x: 460, y: 120, w: 70, h: 20 },
       ],
@@ -43,6 +47,8 @@ export const stage3: StageData = {
         { x: 200, y: 0, w: 20, h: 20 },
         { x: 380, y: 0, w: 20, h: 20 },
       ],
+      deathMessage:
+        "宇和島秋祭り\n宇和島市で10/ 29日に行われる\n牛鬼や八つ鹿踊りなどが市内を練り歩き、巫女さんの舞なども見ることができる",
     },
     {
       background: "/festival/matsuyama_matsuri.jpg",
@@ -56,18 +62,22 @@ export const stage3: StageData = {
         { x: 210, y: 0, w: 20, h: 20 },
         { x: 420, y: 0, w: 20, h: 20 },
       ],
+      deathMessage:
+        "道後松山秋祭り\n松山市で10/5～10/7に行われる\n「鉢合わせ」と呼ばれる神輿同士のぶつかり合いが有名",
     },
     {
       background: "/festival/saijou_matsuri.jpg",
       hazardImage: "/festival/teki/omatsuri_happi_boy.png",
       platforms: [
-        { x: 120, y: 100, w: 70, h: 20 },
+        { x: 120, y: 80, w: 70, h: 20 },
         { x: 320, y: 170, w: 70, h: 20 },
       ],
       hazards: [
         { x: 230, y: 0, w: 20, h: 20 },
         { x: 450, y: 0, w: 20, h: 20 },
       ],
+      deathMessage:
+        "西条祭り\n西条市で10/15～10/17に行われる\n深夜に集まるだんじりや神輿、太鼓台がとても綺麗",
       goal: { x: 580, y: 0, w: 30, h: 60 },
     },
   ],

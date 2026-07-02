@@ -52,6 +52,8 @@ export const stage8: StageData = {
         { x: 470, y: 0, w: 25, h: 20 },
         { x: 630, y: 0, w: 25, h: 20 },
       ],
+      deathMessage:
+        "天守閣\n江戸時代以前に建造されたものがいまだに残っている(12個しかない)\n中には展示物がある",
     },
     {
       background: "/matsuyama-castle/siro_teien2.jpg",
@@ -146,6 +148,7 @@ export const stage8: StageData = {
         { x: 600, y: 0, w: 25, h: 20 },
       ],
       goal: { x: 640, y: 0, w: 30, h: 60 },
+      deathMessage: "遠くから見た松山城\nこの距離の写真からでも迫力を感じる",
     },
   ],
 };
