@@ -19,6 +19,8 @@ export interface Screen {
   backgrounds: BackgroundImage[]
   platforms: Rect[]
   hazards: Rect[]
+  /** 間欠泉の配置（任意） */
+  geysers?: import('../geysers').GeyserDef[]
   /** 最終画面のゴール（任意） */
   goal?: Rect
 }
@@ -35,6 +37,8 @@ export interface StageData {
   hazardImage?: string
   /** ステージ固有のハザード描画サイズ（未指定時は各hazardのw,hをそのまま使用） */
   hazardSize?: { w: number; h: number }
+  /** 間欠泉画像パス（geysers使用時） */
+  geyserImage?: string
 }
 
 import { stage1 } from './stage1' //四国中央 新居浜
