@@ -1,8 +1,8 @@
-import { StageData } from './index'
+import { StageData } from "./index";
 
 export const stage7: StageData = {
   id: 7,
-  name: '道後温泉',
+  name: "道後温泉",
   playerImage: "/matsuyama-dogo/jiki_yukatajoshi.png",
   playerSize: { w: 70, h: 100 },
   hazardImage: "/matsuyama-dogo/teki/kanketu.png",
@@ -20,6 +20,7 @@ export const stage7: StageData = {
         { x: 390, y: 0, w: 25, h: 20 },
         { x: 560, y: 0, w: 25, h: 20 },
       ],
+      deathMessage: "足湯\n道後温泉付近にある空の散歩道\n絶景と足湯が楽しめる",
     },
     {
       background: "/matsuyama-dogo/dougo_yunokawa.jpg",
@@ -38,6 +39,7 @@ export const stage7: StageData = {
         { x: 470, y: 0, w: 25, h: 20 },
         { x: 620, y: 0, w: 25, h: 20 },
       ],
+      deathMessage: "道後温泉の湯の川\n昼に見ても夜に見ても綺麗",
     },
     {
       background: "/matsuyama-dogo/dougo_oyu.jpg",
@@ -58,6 +60,7 @@ export const stage7: StageData = {
         { x: 350, y: 0, w: 25, h: 20 },
         { x: 530, y: 0, w: 25, h: 20 },
       ],
+      deathMessage: "浴場",
     },
     {
       background: "/matsuyama-dogo/dougo_heya.jpg",
@@ -80,6 +83,8 @@ export const stage7: StageData = {
         { x: 330, y: 0, w: 25, h: 20 },
         { x: 500, y: 0, w: 25, h: 20 },
       ],
+      deathMessage:
+        "道後温泉の一室\nきれいな和室\n愛媛県に住んでいるが一度は泊まってみたいと思う",
     },
     {
       background: "/matsuyama-dogo/dougo_mappingu.jpg",
@@ -101,6 +106,8 @@ export const stage7: StageData = {
         { x: 370, y: 0, w: 25, h: 20 },
         { x: 540, y: 0, w: 25, h: 20 },
       ],
+      deathMessage:
+        "お湯につかりながらきれいなプロジェクトマッピングが楽しめる\n男湯にも女湯にもあるらしい\n行ってみたい。。",
     },
     {
       background: "/matsuyama-dogo/dougo_gaikan.jpg",
@@ -122,7 +129,8 @@ export const stage7: StageData = {
         { x: 350, y: 0, w: 25, h: 20 },
         { x: 530, y: 0, w: 25, h: 20 },
       ],
+      deathMessage: "松山市にある道後温泉\n外観は趣があって個人的に好き",
       goal: { x: 620, y: 0, w: 30, h: 60 },
     },
   ],
-}
+};

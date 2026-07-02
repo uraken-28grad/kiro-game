@@ -392,21 +392,39 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
       {/* Dead overlay */}
       {state.dead && (
         <>
+          {/* GAME OVER label (red background, above center) */}
+          <pixiGraphics draw={(g: Graphics) => {
+            g.clear()
+            const boxW = width * 0.5
+            const boxH = 50
+            const boxX = (width - boxW) / 2
+            const boxY = height / 2 - 60 - boxH / 2
+            g.roundRect(boxX, boxY, boxW, boxH, 10)
+            g.fill({ color: 0xcc0000, alpha: 0.6 })
+          }} />
+          <pixiText
+            text={'GAME OVER'}
+            x={width / 2}
+            y={height / 2 - 60}
+            anchor={0.5}
+            style={{ fontSize: 24, fill: 0xffffff, fontWeight: 'bold' }}
+          />
+          {/* Death message (black background, center) */}
           <pixiGraphics draw={(g: Graphics) => {
             g.clear()
             const boxW = width * 0.7
             const boxH = 80
             const boxX = (width - boxW) / 2
-            const boxY = (height - boxH) / 2
+            const boxY = height / 2 + 20 - boxH / 2
             g.roundRect(boxX, boxY, boxW, boxH, 12)
             g.fill({ color: 0x000000, alpha: 0.5 })
           }} />
           <pixiText
-            text={currentScreen.deathMessage ?? 'GAME OVER'}
+            text={currentScreen.deathMessage ?? ''}
             x={width / 2}
-            y={height / 2}
+            y={height / 2 + 20}
             anchor={0.5}
-            style={{ fontSize: 20, fill: 0xffffff, fontWeight: 'bold' }}
+            style={{ fontSize: 18, fill: 0xffffff }}
           />
         </>
       )}
