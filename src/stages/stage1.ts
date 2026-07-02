@@ -15,6 +15,7 @@ export const stage1: StageData = {
         { x: 450, y: 80, w: 120, h: 20 },
       ],
       hazards: [],
+      deathMessage: "新居浜市にある別子銅山\n跡東洋のマチュピチュと呼ばれている"
     },
     {
       background: "/niihama/niihama-Minetopia-1.jpg",
@@ -25,6 +26,7 @@ export const stage1: StageData = {
         { x: 550, y: 60, w: 100, h: 20 },
       ],
       hazards: [{ x: 280, y: 0, w: 20, h: 20 }],
+      deathMessage: "新居浜市にある別子銅山\n跡東洋のマチュピチュと呼ばれている"
     },
     {
       background: "/niihama/shikokuchuo-tomisatokeikoku.jpg",
