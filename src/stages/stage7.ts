@@ -7,6 +7,7 @@ export const stage7: StageData = {
   playerSize: { w: 70, h: 100 },
   hazardImage: "/matsuyama-dogo/teki/kanketu.png",
   hazardSize: { w: 50, h: 70 },
+  geyserImage: "/matsuyama-dogo/teki/kanketu.png",
   screens: [
     {
       background: "/matsuyama-dogo/dougo_ashiyu.jpg",
@@ -121,6 +122,13 @@ export const stage7: StageData = {
         { x: 170, y: 0, w: 25, h: 20 },
         { x: 350, y: 0, w: 25, h: 20 },
         { x: 530, y: 0, w: 25, h: 20 },
+      ],
+      // 左側3個(x=80,150,240)以外の足場から間欠泉が噴出
+      geysers: [
+        { x: 395, y: 120, w: 50, h: 100, triggerX: 350, interval: 1, duration: 90 },
+        { x: 555, y: 200, w: 50, h: 100, triggerX: 500, interval: 1, duration: 90 },
+        { x: 695, y: 140, w: 50, h: 100, triggerX: 650, interval: 1, duration: 90 },
+        { x: 855, y: 100, w: 50, h: 100, triggerX: 800, interval: 1, duration: 90 },
       ],
       goal: { x: 620, y: 0, w: 30, h: 60 },
     },
