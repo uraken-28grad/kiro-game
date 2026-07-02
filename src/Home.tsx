@@ -24,7 +24,7 @@ function Home() {
           width: "min(90vw, calc(80vh * 4 / 3))",
           height: "min(80vh, calc(90vw * 3 / 4))",
           gap: 16,
-          backgroundImage: "url(/home-back.gif)",
+          backgroundImage: "url(/home-back.webp)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
