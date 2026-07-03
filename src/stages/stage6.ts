@@ -11,7 +11,7 @@ export const stage6: StageData = {
   goalSize: { w: 50, h: 50 },
   screens: [
     {
-      background: "/uwajima/komomisaki.jpg",
+      background: "/uwajima/komomisaki.webp",
       platforms: [
         { x: 120, y: 80, w: 50, h: 20 },
         { x: 300, y: 190, w: 45, h: 20 },
@@ -26,7 +26,7 @@ export const stage6: StageData = {
       deathMessage: "高茂岬\n海の雄大さを感じれる\nとてつもなく絶景",
     },
     {
-      background: "/uwajima/kurobae.jpg",
+      background: "/uwajima/kurobae.webp",
       platforms: [
         { x: 80, y: 140, w: 45, h: 20 },
         { x: 240, y: 80, w: 45, h: 20 },
@@ -43,7 +43,7 @@ export const stage6: StageData = {
         "宇和島港戎山防波場灯台\n宇和島湾最奥部に位置している\n海を照らす灯台",
     },
     {
-      background: "/uwajima/uwajima_castle.jpg",
+      background: "/uwajima/uwajima_castle.webp",
       platforms: [
         { x: 140, y: 70, w: 45, h: 20 },
         { x: 290, y: 180, w: 25, h: 20 },
@@ -59,7 +59,7 @@ export const stage6: StageData = {
         "宇和島城\n宇和島の中心部に位置するお城\n安土桃山時代に築かれた",
     },
     {
-      background: "/uwajima/yuzumizugaura.jpg",
+      background: "/uwajima/yuzumizugaura.webp",
       platforms: [
         { x: 150, y: 90, w: 45, h: 20 },
         { x: 360, y: 170, w: 45, h: 20 },

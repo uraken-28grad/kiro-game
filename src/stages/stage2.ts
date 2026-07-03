@@ -10,7 +10,7 @@ export const stage2: StageData = {
   goalSize: { w: 100, h: 100 },
   screens: [
     {
-      background: "/imabari/saijou_jinja.jpg",
+      background: "/imabari/saijou_jinja.webp",
       hazardImage: "/imabari/teki/hune2.png",
       hazardSize: { w: 200, h: 200 },
       platforms: [
@@ -27,7 +27,7 @@ export const stage2: StageData = {
       deathMessage: "西条市にある石鎚神社\n石鎚山を神体山とする神社",
     },
     {
-      background: "/imabari/saijou_yama.jpg",
+      background: "/imabari/saijou_yama.webp",
       hazardImage: "/imabari/teki/hune2.png",
       platforms: [
         { x: 180, y: 80, w: 50, h: 20 },
@@ -46,7 +46,7 @@ export const stage2: StageData = {
         "西条市と久万高原町の間に位置する日本七霊山の一つの石鎚山\n私はおばあちゃんの愛媛は石鎚山に守られているという話を今でも信じている",
     },
     {
-      background: "/imabari/imabari_shiro.jpg",
+      background: "/imabari/imabari_shiro.webp",
       hazardImage: "/imabari/teki/yakitori_mise.png",
       platforms: [
         { x: 120, y: 80, w: 40, h: 20 },
@@ -64,7 +64,7 @@ export const stage2: StageData = {
         "今治市にある今治城\n5層6階の天守閣や、海水を引き入れた堀など\n特異な構造を持った海浜に位置する海城",
     },
     {
-      background: "/imabari/shimanami_tenboudai.jpg",
+      background: "/imabari/shimanami_tenboudai.webp",
       hazardImage: "/imabari/teki/yakitori_mise.png",
       platforms: [
         { x: 100, y: 60, w: 80, h: 20 },

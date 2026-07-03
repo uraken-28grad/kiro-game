@@ -13,7 +13,7 @@ export const stage7: StageData = {
   dripImage: "/matsuyama-dogo/teki/water_shizuku.png",
   screens: [
     {
-      background: "/matsuyama-dogo/dougo_ashiyu.jpg",
+      background: "/matsuyama-dogo/dougo_ashiyu.webp",
       platforms: [
         { x: 150, y: 80, w: 45, h: 20 },
         // { x: 300, y: 200, w: 40, h: 20 },
@@ -27,7 +27,7 @@ export const stage7: StageData = {
       deathMessage: "足湯\n道後温泉付近にある空の散歩道\n絶景と足湯が楽しめる",
     },
     {
-      background: "/matsuyama-dogo/dougo_yunokawa.jpg",
+      background: "/matsuyama-dogo/dougo_yunokawa.webp",
       platforms: [
         { x: 80, y: 80, w: 40, h: 20 },
         { x: 150, y: 130, w: 40, h: 20 },
@@ -46,7 +46,7 @@ export const stage7: StageData = {
       deathMessage: "道後温泉の湯の川\n昼に見ても夜に見ても綺麗",
     },
     {
-      background: "/matsuyama-dogo/dougo_oyu.jpg",
+      background: "/matsuyama-dogo/dougo_oyu.webp",
       platforms: [
         // { x: 100, y: 130, w: 40, h: 20 },
         // { x: 270, y: 210, w: 40, h: 20 },
@@ -70,7 +70,7 @@ export const stage7: StageData = {
       ],
     },
     {
-      background: "/matsuyama-dogo/dougo_heya.jpg",
+      background: "/matsuyama-dogo/dougo_heya.webp",
       platforms: [
         // { x: 80, y: 110, w: 40, h: 20 },
         // { x: 250, y: 190, w: 40, h: 20 },
@@ -97,7 +97,7 @@ export const stage7: StageData = {
       ],
     },
     {
-      background: "/matsuyama-dogo/dougo_mappingu.jpg",
+      background: "/matsuyama-dogo/dougo_mappingu.webp",
       platforms: [
         // { x: 100, y: 100, w: 40, h: 20 },
         // { x: 280, y: 200, w: 40, h: 20 },
@@ -123,7 +123,7 @@ export const stage7: StageData = {
       ],
     },
     {
-      background: "/matsuyama-dogo/dougo_gaikan.jpg",
+      background: "/matsuyama-dogo/dougo_gaikan.webp",
       platforms: [
         // { x: 80, y: 120, w: 40, h: 20 },
         // { x: 260, y: 200, w: 40, h: 20 },

@@ -10,7 +10,7 @@ export const stage3: StageData = {
   goalSize: { w: 150, h: 150 },
   screens: [
     {
-      background: "/festival/iyo_mishima.jpg",
+      background: "/festival/iyo_mishima.webp",
       hazardImage: "/festival/teki/omatsuri_happi_boy.png",
       platforms: [
         { x: 300, y: 80, w: 80, h: 20 },
@@ -22,7 +22,7 @@ export const stage3: StageData = {
         "伊予三島秋祭り\n四国中央市で10/20〜10/23に行われる\n三島太鼓台統一寄せが見物(だと思う)",
     },
     {
-      background: "/festival/taiko.jpg",
+      background: "/festival/taiko.webp",
       hazardImage: "/festival/teki/omatsuri_happi_girl.png",
       platforms: [
         { x: 150, y: 80, w: 70, h: 20 },
@@ -40,7 +40,7 @@ export const stage3: StageData = {
         "新居浜太鼓祭り\n新居浜市で10/16～10/18に行われる\nとてつもない迫力があり素晴らしい。夜太鼓もとても綺麗",
     },
     {
-      background: "/festival/uwajima_matsuri.jpg",
+      background: "/festival/uwajima_matsuri.webp",
       hazardImage: "/festival/teki/omatsuri_happi_boy.png",
       platforms: [
         { x: 100, y: 400, w: 70, h: 20 },
@@ -57,7 +57,7 @@ export const stage3: StageData = {
         "宇和島秋祭り\n宇和島市で10/ 29日に行われる\n牛鬼や八つ鹿踊りなどが市内を練り歩き、巫女さんの舞なども見ることができる",
     },
     {
-      background: "/festival/matsuyama_matsuri.jpg",
+      background: "/festival/matsuyama_matsuri.webp",
       hazardImage: "/festival/teki/omatsuri_happi_girl.png",
       platforms: [
         { x: 100, y: 90, w: 70, h: 20 },
@@ -77,7 +77,7 @@ export const stage3: StageData = {
         "道後松山秋祭り\n松山市で10/5～10/7に行われる\n「鉢合わせ」と呼ばれる神輿同士のぶつかり合いが有名",
     },
     {
-      background: "/festival/saijou_matsuri.jpg",
+      background: "/festival/saijou_matsuri.webp",
       hazardImage: "/festival/teki/omatsuri_happi_boy.png",
       platforms: [
         { x: 120, y: 80, w: 70, h: 20 },

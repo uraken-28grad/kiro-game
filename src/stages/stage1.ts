@@ -11,7 +11,7 @@ export const stage1: StageData = {
 
   screens: [
     {
-      background: "/niihama/bessi.jpg",
+      background: "/niihama/bessi.webp",
       hazardImage: "/niihama/teki/dou.png",
       platforms: [
         { x: 200, y: 50, w: 120, h: 20 },
@@ -23,7 +23,7 @@ export const stage1: StageData = {
         "新居浜市にある別子銅山\n跡東洋のマチュピチュと呼ばれている",
     },
     {
-      background: "/niihama/niihama-Minetopia-1.jpg",
+      background: "/niihama/niihama-Minetopia-1.webp",
       hazardImage: "/niihama/teki/dou.png",
       platforms: [
         { x: 150, y: 60, w: 100, h: 20 },
@@ -35,7 +35,7 @@ export const stage1: StageData = {
         "新居浜市のマイントピア別子の観光と移動ができる観光列車\n乗るとわくわくする",
     },
     {
-      background: "/niihama/shikokuchuo-tomisatokeikoku.jpg",
+      background: "/niihama/shikokuchuo-tomisatokeikoku.webp",
       hazardImage: "/niihama/teki/paper.png",
       platforms: [
         { x: 100, y: 70, w: 100, h: 20 },
@@ -49,7 +49,7 @@ export const stage1: StageData = {
         "四国中央市に位置する藤原大橋\n紅葉と渓谷の壮大な絶景が広がる",
     },
     {
-      background: "/niihama/shikokuchuo-kawanoejou.jpg",
+      background: "/niihama/shikokuchuo-kawanoejou.webp",
       hazardImage: "/niihama/teki/paper.png",
       platforms: [
         { x: 150, y: 80, w: 100, h: 20 },

@@ -10,7 +10,7 @@ export const stage8: StageData = {
   goalSize: { w: 50, h: 50 },
   screens: [
     {
-      background: "/matsuyama-castle/siro_tien3.jpg",
+      background: "/matsuyama-castle/siro_tien3.webp",
       hazardImage: "/matsuyama-castle/teki/shuriken.png",
       platforms: [
         // { x: 130, y: 130, w: 40, h: 20 },
@@ -33,7 +33,7 @@ export const stage8: StageData = {
         "二之丸史跡庭園\n昔の部屋の間取りを表現している。とても綺麗\n恋人の聖地があるらしい",
     },
     {
-      background: "/matsuyama-castle/siro_tenshu.jpg",
+      background: "/matsuyama-castle/siro_tenshu.webp",
       hazardImage: "/matsuyama-castle/teki/shuriken.png",
       platforms: [
         // { x: 80, y: 110, w: 35, h: 20 },
@@ -54,7 +54,7 @@ export const stage8: StageData = {
         "天守閣\n江戸時代以前に建造されたものがいまだに残っている(12個しかない)\n中には展示物がある",
     },
     {
-      background: "/matsuyama-castle/siro_teien2.jpg",
+      background: "/matsuyama-castle/siro_teien2.webp",
       hazardImage: "/matsuyama-castle/teki/ninja_warui.png",
       platforms: [
         { x: 100, y: 80,  w: 20, h: 20 },
@@ -82,7 +82,7 @@ export const stage8: StageData = {
         "二之丸史跡庭園\n昔の部屋の間取りを表現している。とても綺麗\n恋人の聖地があるらしい",
     },
     {
-      background: "/matsuyama-castle/siro_teien1.jpg",
+      background: "/matsuyama-castle/siro_teien1.webp",
       hazardImage: "/matsuyama-castle/teki/ninja_syuriken.png",
       platforms: [
         // { x: 80, y: 100, w: 35, h: 20 },
@@ -112,7 +112,7 @@ export const stage8: StageData = {
         "二之丸史跡庭園\n昔の部屋の間取りを表現している。とても綺麗\n恋人の聖地があるらしい",
     },
     {
-      background: "/matsuyama-castle/siro_gaikan.jpg",
+      background: "/matsuyama-castle/siro_gaikan.webp",
       hazardImage: "/matsuyama-castle/teki/ninja_musasabi.png",
       platforms: [
         // { x: 100, y: 120, w: 35, h: 20 },
@@ -139,7 +139,7 @@ export const stage8: StageData = {
       deathMessage: "遠くから見た松山城\nこの距離の写真からでも迫力を感じる",
     },
     {
-      background: "/matsuyama-castle/matsuyamajyou.jpg",
+      background: "/matsuyama-castle/matsuyamajyou.webp",
       hazardImage: "/matsuyama-castle/teki/ninja_hashiru.png",
       platforms: [
         { x: 100, y: 80,  w: 20, h: 20 },

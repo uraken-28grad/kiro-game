@@ -11,7 +11,7 @@ export const stage5: StageData = {
   goalSize: { w: 100, h: 100 },
   screens: [
     {
-      background: "/nan-yo/Uchikoza.jpg",
+      background: "/nan-yo/Uchikoza.webp",
       platforms: [
         { x: 200, y: 80, w: 55, h: 20 },
         { x: 400, y: 160, w: 50, h: 20 },
@@ -22,7 +22,7 @@ export const stage5: StageData = {
       deathMessage: "内子座\n内子町にある、大正5年に建てた芝居小屋",
     },
     {
-      background: "/nan-yo/nyohoji5.jpg",
+      background: "/nan-yo/nyohoji5.webp",
       platforms: [
         { x: 200, y: 80, w: 55, h: 20 },
         { x: 400, y: 160, w: 50, h: 20 },
@@ -38,7 +38,7 @@ export const stage5: StageData = {
         "如法寺\n大洲市にある臨済宗妙心寺派の寺院\n大洲藩主、加藤泰興の開墓\n三大道場の一つ",
     },
     {
-      background: "/nan-yo/Ozu_Castle,_tenshu-1.jpg",
+      background: "/nan-yo/Ozu_Castle,_tenshu-1.webp",
       platforms: [
         { x: 200, y: 80, w: 55, h: 20 },
         { x: 350, y: 160, w: 50, h: 20 },
@@ -54,7 +54,7 @@ export const stage5: StageData = {
         "大洲城\n鎌倉時代末期に築城され、平成に木造天守が復元された。",
     },
     {
-      background: "/nan-yo/Sadamisaki_hantou_01.jpg",
+      background: "/nan-yo/Sadamisaki_hantou_01.webp",
       platforms: [
         { x: 150, y: 80, w: 50, h: 20 },
         { x: 300, y: 160, w: 50, h: 20 },
@@ -69,7 +69,7 @@ export const stage5: StageData = {
         "佐田岬半島\n八幡浜市に属する日本一細長い半島\n先端には佐田岬と佐田岬灯台がある",
     },
     {
-      background: "/nan-yo/Meijihasi_yawatahamasi.jpg",
+      background: "/nan-yo/Meijihasi_yawatahamasi.webp",
       platforms: [
         { x: 150, y: 80, w: 20, h: 20 },
         { x: 250, y: 160, w: 20, h: 20 },
@@ -89,7 +89,7 @@ export const stage5: StageData = {
         "明治橋\n鉄筋コンクリート路式アーチ橋で、この形式の橋では現役最古\n初代明治橋のたもとで二宮忠八翁が自作の凧をあげて見せ、その凧で整形を立てていた",
     },
     {
-      background: "/nan-yo/Unomachi_town_b.jpg",
+      background: "/nan-yo/Unomachi_town_b.webp",
       platforms: [
         { x: 80, y: 80, w: 50, h: 20 },
         { x: 260, y: 160, w: 50, h: 20 },

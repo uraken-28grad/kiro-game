@@ -11,7 +11,7 @@ export const stage4: StageData = {
   goalSize: { w: 150, h: 150 },
   screens: [
     {
-      background: "/chu-yo/botchan.jpg",
+      background: "/chu-yo/botchan.webp",
       platforms: [
         { x: 100, y: 200, w: 100, h: 20 },
         { x: 200, y: 250, w: 100, h: 20 },
@@ -34,7 +34,7 @@ export const stage4: StageData = {
         "坊ちゃん劇場\n東温市にあるハイレベルなミュージカル劇場\n歴史や偉人をテーマにした作品を上演している",
     },
     {
-      background: "/chu-yo/Shimonada.jpg",
+      background: "/chu-yo/Shimonada.webp",
       platforms: [
         { x: 20, y: 170, w: 300, h: 20 },
         { x: 260, y: 250, w: 30, h: 20 },
@@ -51,7 +51,7 @@ export const stage4: StageData = {
         "下灘駅\n松山駅から1時間、海を見ることができる駅\n数々のドラマや映画のロケ地として有名",
     },
     {
-      background: "/chu-yo/kuma-kogen.jpg",
+      background: "/chu-yo/kuma-kogen.webp",
       platforms: [
         { x: 150, y: 80, w: 30, h: 20 },
         { x: 0, y: 160, w: 30, h: 20 },
@@ -69,7 +69,7 @@ export const stage4: StageData = {
         "久万高原町にある日本三大カルストのひとつ\n美しい風景や高山植物を楽しむことができる",
     },
     {
-      background: "/chu-yo/kumakougen_omogokei.jpg",
+      background: "/chu-yo/kumakougen_omogokei.webp",
       platforms: [
         { x: 260, y: 80, w: 20, h: 20 },
         { x: 350, y: 150, w: 20, h: 20 },
@@ -89,7 +89,7 @@ export const stage4: StageData = {
         "久万高原町にある面河渓\n様々な四季が楽しめる\n川がとても透明で綺麗",
     },
     {
-      background: "/chu-yo/masaki_darumayuhi.jpg",
+      background: "/chu-yo/masaki_darumayuhi.webp",
       platforms: [
         { x: 120, y: 90, w: 55, h: 20 },
         { x: 200, y: 180, w: 55, h: 20 },
