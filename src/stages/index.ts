@@ -14,14 +14,18 @@ export interface Screen {
   hazards: Rect[]
   /** 間欠泉の配置（任意） */
   geysers?: import('../geysers').GeyserDef[]
+  /** 雫トラップの配置（任意） */
+  drips?: import('../drips').DripDef[]
   /** この画面のハザード画像パス（未指定時はステージのhazardImageを使用） */
   hazardImage?: string
   /** この画面のハザード描画サイズ（未指定時はステージのhazardSizeを使用） */
   hazardSize?: { w: number; h: number }
   /** ゲームオーバー時に表示するメッセージ（未指定時はデフォルトメッセージ） */
   deathMessage?: string
-  /** 最終画面のゴール（任意） */
-  goal?: Rect
+  /** ゴール時に表示するメッセージ（未指定時は空） */
+  clearMessage?: string
+  /** 最終画面のゴール座標（任意。サイズはStageData.goalSizeで指定） */
+  goal?: { x: number; y: number }
 }
 
 export interface StageData {
@@ -36,8 +40,14 @@ export interface StageData {
   hazardImage?: string
   /** ステージ固有のハザード描画サイズ（未指定時は各hazardのw,hをそのまま使用） */
   hazardSize?: { w: number; h: number }
+  /** ステージ固有のゴール画像パス（未指定時は金色矩形で描画） */
+  goalImage?: string
+  /** ステージ固有のゴール描画サイズ（未指定時はデフォルト 30x60） */
+  goalSize?: { w: number; h: number }
   /** 間欠泉画像パス（geysers使用時） */
   geyserImage?: string
+  /** 雫トラップ画像パス（drips使用時） */
+  dripImage?: string
 }
 
 import { stage1 } from './stage1' //四国中央 新居浜

@@ -3,11 +3,14 @@ import { useTick, extend } from '@pixi/react'
 import { Assets, Graphics, Sprite, Text, Texture } from 'pixi.js'
 import { Screen, StageData } from './stages/index.ts'
 import { useGeysers, GeyserSprites } from './geysers'
+import { useDrips, DripSprites } from './drips'
 
 extend({ Sprite, Text })
 
 const DEFAULT_PLAYER_W = 30
 const DEFAULT_PLAYER_H = 40
+const DEFAULT_GOAL_W = 30
+const DEFAULT_GOAL_H = 60
 const SPEED = 4
 const GRAVITY = 0.6
 const JUMP_FORCE = -12
@@ -70,6 +73,7 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   const goalReached = useRef(false)
   const [hazardTextures, setHazardTextures] = useState<Map<string, Texture>>(new Map())
   const [playerTex, setPlayerTex] = useState<Texture | null>(null)
+  const [goalTex, setGoalTex] = useState<Texture | null>(null)
   const [bgTextures, setBgTextures] = useState<Map<string, Texture>>(new Map())
 
   // ステージ5以上かどうか
@@ -92,6 +96,12 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
 
     const playerImagePath = stage.playerImage ?? '/animal2.png'
     Assets.load<Texture>(playerImagePath).then(setPlayerTex)
+
+    if (stage.goalImage) {
+      Assets.load<Texture>(stage.goalImage).then(setGoalTex)
+    } else {
+      setGoalTex(null)
+    }
   }, [stage])
 
   // Load background textures for all screens
@@ -128,6 +138,14 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   )
   const { activeGeysers, tick: geyserTick, checkCollision: checkGeyserCollision } = useGeysers(geyserDefs)
 
+  // 雫トラップhook: 現在の画面のdrips定義を渡す
+  const dripDefs = useMemo(
+    () => stage.screens[state.screenIndex]?.drips ?? [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stage, state.screenIndex]
+  )
+  const { fallingDrips, tick: dripTick, checkCollision: checkDripCollision } = useDrips(dripDefs, groundY)
+
   // 画面が変わったらハザード状態を初期化
   useEffect(() => {
     if (movingHazards) {
@@ -162,6 +180,9 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   const tick = useCallback(() => {
     // 間欠泉のサイクルを更新
     geyserTick(playerXRef.current)
+
+    // 雫トラップを更新
+    dripTick()
 
     // ハザードを動かす（ステージ5以上のみ）
     if (movingHazards) {
@@ -281,19 +302,26 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
         return { ...prev, playerX, playerY, vy, onGround, dead: true }
       }
 
+      // Drip collision（雫トラップ：落下中の雫との当たり判定）
+      if (checkDripCollision(playerX, playerY, playerW, playerH)) {
+        return { ...prev, playerX, playerY, vy, onGround, dead: true }
+      }
+
       // Goal collision
       if (currentScreen.goal) {
         const gl = currentScreen.goal
+        const gw = stage.goalSize?.w ?? DEFAULT_GOAL_W
+        const gh = stage.goalSize?.h ?? DEFAULT_GOAL_H
         const gx = gl.x
-        const gy = toScreenY(gl.y, gl.h, groundY)
-        const overlapX = playerX + playerW > gx && playerX < gx + gl.w
-        const overlapY = playerY + playerH > gy && playerY < gy + gl.h
+        const gy = toScreenY(gl.y, gh, groundY)
+        const overlapX = playerX + playerW > gx && playerX < gx + gw
+        const overlapY = playerY + playerH > gy && playerY < gy + gh
         if (overlapX && overlapY) {
           // ゴール内に入ったら出られない（位置をクランプ）
           if (playerX < gx) playerX = gx
-          if (playerX + playerW > gx + gl.w) playerX = gx + gl.w - playerW
+          if (playerX + playerW > gx + gw) playerX = gx + gw - playerW
           if (playerY < gy) playerY = gy
-          if (playerY + playerH > gy + gl.h) playerY = gy + gl.h - playerH
+          if (playerY + playerH > gy + gh) playerY = gy + gh - playerH
           vy = 0
           goalReached.current = true
           return { screenIndex, playerX, playerY, vy, onGround: true, dead: false, cleared: true }
@@ -320,7 +348,7 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
 
       return { screenIndex, playerX, playerY, vy, onGround, dead: false, cleared: false }
     })
-  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision])
+  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision, dripTick, checkDripCollision])
 
   useTick(tick)
 
@@ -364,18 +392,32 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
       })()}
 
       {/* Goal */}
-      {currentScreen.goal && (
-        <pixiGraphics draw={(g: Graphics) => {
-          g.clear()
-          const gl = currentScreen.goal!
-          g.rect(gl.x, toScreenY(gl.y, gl.h, groundY), gl.w, gl.h)
-          g.fill(0xffd700)
-        }} />
-      )}
+      {currentScreen.goal && (() => {
+        const gl = currentScreen.goal!
+        const gw = stage.goalSize?.w ?? DEFAULT_GOAL_W
+        const gh = stage.goalSize?.h ?? DEFAULT_GOAL_H
+        const gx = gl.x
+        const gy = toScreenY(gl.y, gh, groundY)
+        if (goalTex) {
+          return <pixiSprite texture={goalTex} x={gx} y={gy} width={gw} height={gh} />
+        }
+        return (
+          <pixiGraphics draw={(g: Graphics) => {
+            g.clear()
+            g.rect(gx, gy, gw, gh)
+            g.fill(0xffd700)
+          }} />
+        )
+      })()}
 
       {/* Geysers */}
       {stage.geyserImage && (
         <GeyserSprites activeGeysers={activeGeysers} imagePath={stage.geyserImage} groundY={groundY} />
+      )}
+
+      {/* Drips (雫トラップ) */}
+      {stage.dripImage && (
+        <DripSprites fallingDrips={fallingDrips} imagePath={stage.dripImage} />
       )}
 
       {/* Player */}
@@ -429,12 +471,6 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
         </>
       )}
 
-      {/* Cleared overlay */}
-      {state.cleared && (
-        <pixiGraphics draw={(g: Graphics) => {
-          g.clear(); g.rect(0, 0, width, height); g.fill({ color: 0x000000, alpha: 0.6 })
-        }} />
-      )}
     </>
   )
 }
