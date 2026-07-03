@@ -69,7 +69,7 @@ function Play() {
                 💀 死亡数: {deathCount}
               </p>
               <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【Kiro Game】ステージ${stage.id}「${stage.name}」を死亡数${deathCount}回でクリアしました！`)}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【愛媛県へようこそ！ 〜あれ、観光名所の様子が...？〜】\nステージ${stage.id}「${stage.name}」を死亡数${deathCount}回でクリアしました！`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
