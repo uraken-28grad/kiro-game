@@ -14,7 +14,8 @@ function Home() {
         gap: 16,
       }}
     >
-      <h1>Kiro Game</h1>
+      <h1>愛媛県へようこそ！</h1>
+      <h2>あれ、観光名所の様子が...?</h2>
       <div
         style={{
           display: "flex",
