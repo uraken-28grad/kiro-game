@@ -3,6 +3,7 @@ import { useTick, extend } from '@pixi/react'
 import { Assets, Graphics, Sprite, Text, Texture } from 'pixi.js'
 import { Screen, StageData } from './stages/index.ts'
 import { useGeysers, GeyserSprites } from './geysers'
+import { useDrips, DripSprites } from './drips'
 
 extend({ Sprite, Text })
 
@@ -137,6 +138,14 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   )
   const { activeGeysers, tick: geyserTick, checkCollision: checkGeyserCollision } = useGeysers(geyserDefs)
 
+  // 雫トラップhook: 現在の画面のdrips定義を渡す
+  const dripDefs = useMemo(
+    () => stage.screens[state.screenIndex]?.drips ?? [],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [stage, state.screenIndex]
+  )
+  const { fallingDrips, tick: dripTick, checkCollision: checkDripCollision } = useDrips(dripDefs, groundY)
+
   // 画面が変わったらハザード状態を初期化
   useEffect(() => {
     if (movingHazards) {
@@ -171,6 +180,9 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   const tick = useCallback(() => {
     // 間欠泉のサイクルを更新
     geyserTick(playerXRef.current)
+
+    // 雫トラップを更新
+    dripTick()
 
     // ハザードを動かす（ステージ5以上のみ）
     if (movingHazards) {
@@ -290,6 +302,11 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
         return { ...prev, playerX, playerY, vy, onGround, dead: true }
       }
 
+      // Drip collision（雫トラップ：落下中の雫との当たり判定）
+      if (checkDripCollision(playerX, playerY, playerW, playerH)) {
+        return { ...prev, playerX, playerY, vy, onGround, dead: true }
+      }
+
       // Goal collision
       if (currentScreen.goal) {
         const gl = currentScreen.goal
@@ -331,7 +348,7 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
 
       return { screenIndex, playerX, playerY, vy, onGround, dead: false, cleared: false }
     })
-  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision])
+  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision, dripTick, checkDripCollision])
 
   useTick(tick)
 
@@ -396,6 +413,11 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
       {/* Geysers */}
       {stage.geyserImage && (
         <GeyserSprites activeGeysers={activeGeysers} imagePath={stage.geyserImage} groundY={groundY} />
+      )}
+
+      {/* Drips (雫トラップ) */}
+      {stage.dripImage && (
+        <DripSprites fallingDrips={fallingDrips} imagePath={stage.dripImage} />
       )}
 
       {/* Player */}
