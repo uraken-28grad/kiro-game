@@ -9,6 +9,7 @@ export const stage7: StageData = {
   hazardSize: { w: 50, h: 70 },
   goalImage: "/goal-flag.png",
   goalSize: { w: 50, h: 50 },
+  geyserImage: "/matsuyama-dogo/teki/kanketu.png",
   screens: [
     {
       background: "/matsuyama-dogo/dougo_ashiyu.jpg",
@@ -133,6 +134,14 @@ export const stage7: StageData = {
       ],
       deathMessage: "松山市にある道後温泉\n外観は趣があって個人的に好き",
       goal: { x: 620, y: 0 },
+
+      // 左側3個(x=80,150,240)以外の足場から間欠泉が噴出
+      geysers: [
+        { x: 395, y: 120, w: 50, h: 100, triggerX: 350, interval: 1, duration: 90 },
+        { x: 555, y: 200, w: 50, h: 100, triggerX: 500, interval: 1, duration: 90 },
+        { x: 695, y: 140, w: 50, h: 100, triggerX: 650, interval: 1, duration: 90 },
+        { x: 855, y: 100, w: 50, h: 100, triggerX: 800, interval: 1, duration: 90 },
+      ],
     },
   ],
 };
