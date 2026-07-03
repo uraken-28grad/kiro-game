@@ -123,6 +123,9 @@ http://localhost/
 | Docker (node:24-alpine) | - | 開発・ビルド環境 |
 | nginx (alpine) | - | 本番静的配信 |
 
+## システム構成
+![システム構成図](./ARCHITECTURE.svg)
+
 ## Kiro について
 
 このプロジェクトは [Kiro](https://kiro.dev) (AI コーディングアシスタント) との対話により設計・実装されました。プロジェクト構成、ライブラリ選定、ゲームロジックのすべてが AI との協業で生成されています。
