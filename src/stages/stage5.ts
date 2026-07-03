@@ -12,13 +12,13 @@ export const stage5: StageData = {
     {
       background: "/nan-yo/Uchikoza.jpg",
       platforms: [
-        { x: 100, y: 100, w: 55, h: 20 },
+        { x: 100, y: 80, w: 55, h: 20 },
         { x: 300, y: 180, w: 50, h: 20 },
         { x: 500, y: 120, w: 55, h: 20 },
       ],
       hazards: [
-        { x: 200, y: 0, w: 25, h: 20 },
-        { x: 410, y: 0, w: 25, h: 20 },
+        { x: 260, y: 0, w: 25, h: 20 },
+        { x: 470, y: 0, w: 25, h: 20 },
       ],
       deathMessage: "内子座\n内子町にある、大正5年に建てた芝居小屋",
     },
