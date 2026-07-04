@@ -73,7 +73,7 @@ function Play() {
       <p style={{ margin: '0 0 8px' }}>Stage {stage.id}: {stage.name} | 💀 {deathCount} | ⏱ {displayTime.toFixed(2)}秒</p>
       <div style={{ position: 'relative' }}>
         <Application width={size.w} height={size.h} background={0x87ceeb}>
-          <Game key={key} width={size.w} height={size.h} stage={stage} onClear={handleClear} onDeath={handleDeath} onReady={handleReady} />
+          <Game key={key} width={size.w} height={size.h} stage={stage} onClear={handleClear} onDeath={handleDeath} onReady={handleReady} paused={loading} />
         </Application>
         {loading && (
           <div style={{

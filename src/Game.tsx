@@ -64,7 +64,7 @@ function initHazardStates(screen: Screen, groundY: number, renderSize?: { w: num
   })
 }
 
-export function Game({ width, height, stage, onClear, onDeath, onReady }: { width: number; height: number; stage: StageData; onClear?: () => void; onDeath?: () => void; onReady?: () => void }) {
+export function Game({ width, height, stage, onClear, onDeath, onReady, paused }: { width: number; height: number; stage: StageData; onClear?: () => void; onDeath?: () => void; onReady?: () => void; paused?: boolean }) {
   const playerW = stage.playerSize?.w ?? DEFAULT_PLAYER_W
   const playerH = stage.playerSize?.h ?? DEFAULT_PLAYER_H
   const groundY = height - GROUND_H
@@ -183,6 +183,8 @@ export function Game({ width, height, stage, onClear, onDeath, onReady }: { widt
   }, [])
 
   const tick = useCallback(() => {
+    if (paused) return
+
     // 間欠泉のサイクルを更新
     geyserTick(playerXRef.current)
 
@@ -353,7 +355,7 @@ export function Game({ width, height, stage, onClear, onDeath, onReady }: { widt
 
       return { screenIndex, playerX, playerY, vy, onGround, dead: false, cleared: false }
     })
-  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision, dripTick, checkDripCollision])
+  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision, dripTick, checkDripCollision, paused])
 
   useTick(tick)
 
