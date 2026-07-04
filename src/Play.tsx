@@ -27,15 +27,22 @@ function Play() {
   const [size, setSize] = useState(calcSize)
   const [key, setKey] = useState(0)
   const [cleared, setCleared] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [deathCount, setDeathCount] = useState(0)
   const [elapsedTime, setElapsedTime] = useState(0)
-  const startTimeRef = useRef<number>(Date.now())
+  const startTimeRef = useRef<number>(0)
 
-  // ステージが変わったときのみタイマーをリセット
+  // ステージが変わったときのみタイマーをリセット＆ローディング状態に戻す
   useEffect(() => {
-    startTimeRef.current = Date.now()
+    startTimeRef.current = 0
     setElapsedTime(0)
+    setLoading(true)
   }, [stageId])
+
+  const handleReady = useCallback(() => {
+    startTimeRef.current = Date.now()
+    setLoading(false)
+  }, [])
 
   const handleClear = useCallback(() => {
     setElapsedTime((Date.now() - startTimeRef.current) / 1000)
@@ -52,12 +59,12 @@ function Play() {
   // リアルタイムタイマー表示用
   const [displayTime, setDisplayTime] = useState(0)
   useEffect(() => {
-    if (cleared) return
+    if (loading || cleared) return
     const id = setInterval(() => {
       setDisplayTime((Date.now() - startTimeRef.current) / 1000)
     }, 10)
     return () => clearInterval(id)
-  }, [cleared])
+  }, [loading, cleared])
 
   const handleRetry = () => { setCleared(false); setKey(k => k + 1) }
 
@@ -66,8 +73,25 @@ function Play() {
       <p style={{ margin: '0 0 8px' }}>Stage {stage.id}: {stage.name} | 💀 {deathCount} | ⏱ {displayTime.toFixed(2)}秒</p>
       <div style={{ position: 'relative' }}>
         <Application width={size.w} height={size.h} background={0x87ceeb}>
-          <Game key={key} width={size.w} height={size.h} stage={stage} onClear={handleClear} onDeath={handleDeath} />
+          <Game key={key} width={size.w} height={size.h} stage={stage} onClear={handleClear} onDeath={handleDeath} onReady={handleReady} />
         </Application>
+        {loading && (
+          <div style={{
+            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+            display: 'flex', justifyContent: 'center', alignItems: 'center',
+            background: 'rgba(0,0,0,0.8)',
+            zIndex: 10,
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <p style={{ color: '#fff', fontSize: 28, fontWeight: 'bold', margin: '0 0 12px' }}>
+                Now Loading...
+              </p>
+              <p style={{ color: '#ccc', fontSize: 16, margin: 0 }}>
+                Stage {stage.id}: {stage.name}
+              </p>
+            </div>
+          </div>
+        )}
         {cleared && (
           <div style={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',

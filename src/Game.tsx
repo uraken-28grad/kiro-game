@@ -64,7 +64,7 @@ function initHazardStates(screen: Screen, groundY: number, renderSize?: { w: num
   })
 }
 
-export function Game({ width, height, stage, onClear, onDeath }: { width: number; height: number; stage: StageData; onClear?: () => void; onDeath?: () => void }) {
+export function Game({ width, height, stage, onClear, onDeath, onReady }: { width: number; height: number; stage: StageData; onClear?: () => void; onDeath?: () => void; onReady?: () => void }) {
   const playerW = stage.playerSize?.w ?? DEFAULT_PLAYER_W
   const playerH = stage.playerSize?.h ?? DEFAULT_PLAYER_H
   const groundY = height - GROUND_H
@@ -90,31 +90,36 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
     for (const screen of stage.screens) {
       if (screen.hazardImage) hazardSrcs.add(screen.hazardImage)
     }
-    Promise.all([...hazardSrcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
+    const hazardPromise = Promise.all([...hazardSrcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
       setHazardTextures(new Map(entries))
     })
 
     const playerImagePath = stage.playerImage ?? '/animal2.png'
-    Assets.load<Texture>(playerImagePath).then(setPlayerTex)
+    const playerPromise = Assets.load<Texture>(playerImagePath).then(setPlayerTex)
 
+    let goalPromise: Promise<void> = Promise.resolve()
     if (stage.goalImage) {
-      Assets.load<Texture>(stage.goalImage).then(setGoalTex)
+      goalPromise = Assets.load<Texture>(stage.goalImage).then(setGoalTex)
     } else {
       setGoalTex(null)
     }
-  }, [stage])
 
-  // Load background textures for all screens
-  useEffect(() => {
-    const srcs = new Set<string>()
+    // Load background textures for all screens
+    const bgSrcs = new Set<string>()
     for (const screen of stage.screens) {
-      if (screen.background) srcs.add(screen.background)
+      if (screen.background) bgSrcs.add(screen.background)
     }
-    if (srcs.size === 0) return
-    Promise.all([...srcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
-      setBgTextures(new Map(entries))
+    let bgPromise: Promise<void> = Promise.resolve()
+    if (bgSrcs.size > 0) {
+      bgPromise = Promise.all([...bgSrcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
+        setBgTextures(new Map(entries))
+      })
+    }
+
+    Promise.all([hazardPromise, playerPromise, goalPromise, bgPromise]).then(() => {
+      if (onReady) onReady()
     })
-  }, [stage])
+  }, [stage, onReady])
 
   const [state, setState] = useState<GameState>({
     screenIndex: 0,
