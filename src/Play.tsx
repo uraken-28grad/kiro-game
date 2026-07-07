@@ -65,7 +65,7 @@ function Play() {
     setAiAdvice(null)
     setAiLoading(true)
 
-    fetch(`${import.meta.env.VITE_API_ENDPOINT}/screenshot`, {
+    fetch('https://bh1o2885xk.execute-api.ap-northeast-1.amazonaws.com/prod/screenshot', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
