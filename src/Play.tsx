@@ -52,7 +52,7 @@ function Play() {
     setElapsedTime((Date.now() - startTimeRef.current) / 1000)
     setCleared(true)
   }, [])
-  const sendScreenshot = useCallback(() => {
+  const sendScreenshot = useCallback((screenIndex?: number) => {
     const container = canvasContainerRef.current
     if (!container) return
     const canvas = container.querySelector('canvas')
@@ -61,6 +61,9 @@ function Play() {
 
     // 現在の画面のハザード画像パスを取得
     const hazardImage = stage.hazardImage ?? '/animal.png'
+
+    // 画面固有のAIアシストプロンプトを取得
+    const aiAssistPrompt = screenIndex != null ? stage.screens[screenIndex]?.aiAssistPrompt : undefined
 
     setAiAdvice(null)
     setAiLoading(true)
@@ -73,6 +76,7 @@ function Play() {
         stageId: stage.id,
         stageName: stage.name,
         hazardImage,
+        ...(aiAssistPrompt && { aiAssistPrompt }),
       }),
     })
       .then(res => res.json())
@@ -86,11 +90,11 @@ function Play() {
       .finally(() => setAiLoading(false))
   }, [stage])
 
-  const handleDeath = useCallback(() => {
+  const handleDeath = useCallback((screenIndex: number) => {
     setDeathCount(c => c + 1)
     setIsDead(true)
     // ゲームオーバー時に自動でスクリーンショットを送信
-    setTimeout(() => sendScreenshot(), 100)
+    setTimeout(() => sendScreenshot(screenIndex), 100)
   }, [sendScreenshot])
 
   useEffect(() => {

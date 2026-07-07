@@ -40,6 +40,7 @@ def lambda_handler(event, context):
         stage_id = payload.get("stageId", "")
         stage_name = payload.get("stageName", "")
         hazard_image = payload.get("hazardImage", "")
+        ai_assist_prompt = payload.get("aiAssistPrompt", "")
 
         if not image_data:
             return {
@@ -62,6 +63,8 @@ def lambda_handler(event, context):
         context_text = f"現在のステージ: ステージ{stage_id}「{stage_name}」\n"
         if hazard_image:
             context_text += f"敵の画像ファイル名: {hazard_image}\n"
+        if ai_assist_prompt:
+            context_text += f"追加情報: {ai_assist_prompt}\n"
         context_text += "\nこのスクリーンショットを分析して、ゲームオーバーの原因と次回のアドバイスをください。"
 
         # Bedrock Claude API呼び出し

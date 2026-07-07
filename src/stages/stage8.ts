@@ -52,6 +52,7 @@ export const stage8: StageData = {
       ],
       deathMessage:
         "天守閣\n江戸時代以前に建造されたものがいまだに残っている(12個しかない)\n中には展示物がある",
+      aiAssistPrompt: "下の黒いトゲトゲした敵は手裏剣です。",
     },
     {
       background: "/matsuyama-castle/siro_teien2.jpg",
@@ -80,6 +81,7 @@ export const stage8: StageData = {
       ],
       deathMessage:
         "二之丸史跡庭園\n昔の部屋の間取りを表現している。とても綺麗\n恋人の聖地があるらしい",
+      aiAssistPrompt: "下の黒いトゲトゲした敵は手裏剣です。",
     },
     {
       background: "/matsuyama-castle/siro_teien1.jpg",

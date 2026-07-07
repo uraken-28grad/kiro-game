@@ -22,6 +22,8 @@ export interface Screen {
   hazardSize?: { w: number; h: number }
   /** ゲームオーバー時に表示するメッセージ（未指定時はデフォルトメッセージ） */
   deathMessage?: string
+  /** AI アシスト用の追加プロンプト（未指定時は送信しない） */
+  aiAssistPrompt?: string
   /** ゴール時に表示するメッセージ（未指定時は空） */
   clearMessage?: string
   /** 最終画面のゴール座標（任意。サイズはStageData.goalSizeで指定） */
