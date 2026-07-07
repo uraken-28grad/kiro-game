@@ -8,6 +8,7 @@ export const stage8: StageData = {
   hazardSize: { w: 50, h: 70 },
   goalImage: "/goal-flag.png",
   goalSize: { w: 50, h: 50 },
+  destination: "松山城",
   screens: [
     {
       background: "/matsuyama-castle/siro_tien3.jpg",

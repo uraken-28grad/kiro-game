@@ -8,6 +8,10 @@ export const stage2: StageData = {
   hazardSize: { w: 200, h: 200 },
   goalImage: "/goal-flag.png",
   goalSize: { w: 100, h: 100 },
+
+  destination: "来島海峡第三大橋",
+  waypoints: ["石鎚神社 奥宮 頂上社", "石鎚山", "今治城"],
+
   screens: [
     {
       background: "/imabari/saijou_jinja.jpg",
@@ -71,10 +75,9 @@ export const stage2: StageData = {
         { x: 150, y: 150, w: 80, h: 20 },
         { x: 180, y: 250, w: 80, h: 20 },
         { x: 300, y: 130, w: 80, h: 20 },
-        { x: 400, y: 300, w: 80, h: 20 },
-        { x: 600, y: 300, w: 80, h: 20 },
-        { x: 800, y: 300, w: 80, h: 20 },
-        { x: 1000, y: 300, w: 80, h: 20 },
+        { x: 400, y: 250, w: 80, h: 20 },
+        { x: 600, y: 250, w: 80, h: 20 },
+        { x: 800, y: 250, w: 80, h: 20 },
       ],
       hazards: [
         { x: 200, y: 0, w: 20, h: 20 },
@@ -84,7 +87,7 @@ export const stage2: StageData = {
       ],
       deathMessage:
         "今治市、しまなみ海道の来島海峡大橋\n夕暮れ時の幻想的な景色が綺麗らしい\n展望館から渦潮が見下ろせる",
-      goal: { x: 1050, y: 320 },
+      goal: { x: 850, y: 270 },
     },
   ],
 };

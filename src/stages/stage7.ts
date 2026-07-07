@@ -11,6 +11,7 @@ export const stage7: StageData = {
   goalSize: { w: 50, h: 50 },
   geyserImage: "/matsuyama-dogo/teki/kanketu.png",
   dripImage: "/matsuyama-dogo/teki/water_shizuku.png",
+destination: "道後温泉",
   screens: [
     {
       background: "/matsuyama-dogo/dougo_ashiyu.jpg",

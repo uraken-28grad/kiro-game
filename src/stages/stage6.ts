@@ -9,6 +9,8 @@ export const stage6: StageData = {
   hazardSize: { w: 70, h: 70 },
   goalImage: "/goal-flag.png",
   goalSize: { w: 50, h: 50 },
+  destination: "遊子水荷浦の段畑",
+  waypoints: ["高茂岬", "宇和島港戎山防波場灯台", "宇和島城"],
   screens: [
     {
       background: "/uwajima/komomisaki.jpg",
