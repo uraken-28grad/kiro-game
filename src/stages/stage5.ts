@@ -9,6 +9,8 @@ export const stage5: StageData = {
   hazardSize: { w: 90, h: 90 },
   goalImage: "/goal-flag.png",
   goalSize: { w: 100, h: 100 },
+  destination: "宇和町卯之町",
+  waypoints: ["内子座", "如法寺 愛媛県", "大洲城", "佐田岬灯台", "明治橋　愛媛県"],
   screens: [
     {
       background: "/nan-yo/Uchikoza.jpg",
