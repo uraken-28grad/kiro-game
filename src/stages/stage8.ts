@@ -58,7 +58,7 @@ export const stage8: StageData = {
       background: "/matsuyama-castle/siro_teien2.jpg",
       hazardImage: "/matsuyama-castle/teki/ninja_warui.png",
       platforms: [
-        { x: 100, y: 80,  w: 20, h: 20 },
+        { x: 100, y: 80, w: 20, h: 20 },
         { x: 200, y: 180, w: 20, h: 20 },
         { x: 100, y: 280, w: 20, h: 20 },
         { x: 200, y: 380, w: 20, h: 20 },
@@ -67,8 +67,8 @@ export const stage8: StageData = {
         { x: 400, y: 100, w: 20, h: 20 },
         { x: 530, y: 180, w: 20, h: 20 },
         { x: 700, y: 120, w: 20, h: 20 },
-        { x: 860, y: 80,  w: 20, h: 20 },
-        { x: 500, y: 500,  w: 400, h: 20 },
+        { x: 860, y: 80, w: 20, h: 20 },
+        { x: 500, y: 500, w: 400, h: 20 },
       ],
 
       hazards: [
@@ -120,7 +120,7 @@ export const stage8: StageData = {
         // { x: 280, y: 210, w: 35, h: 20 },
         // { x: 460, y: 120, w: 35, h: 20 },
 
-        { x: 150, y: 80,  w: 20, h: 20 },
+        { x: 150, y: 80, w: 20, h: 20 },
         { x: 180, y: 180, w: 20, h: 20 },
         { x: 220, y: 280, w: 20, h: 20 },
         { x: 300, y: 40, w: 20, h: 20 },
@@ -128,7 +128,7 @@ export const stage8: StageData = {
         { x: 500, y: 180, w: 20, h: 20 },
         { x: 650, y: 40, w: 20, h: 20 },
         { x: 700, y: 140, w: 20, h: 20 },
-        { x: 800, y: 40,  w: 20, h: 20 },
+        { x: 800, y: 40, w: 20, h: 20 },
       ],
       hazards: [
         // { x: 190, y: 0, w: 25, h: 20 },
@@ -143,7 +143,7 @@ export const stage8: StageData = {
       background: "/matsuyama-castle/matsuyamajyou.jpg",
       hazardImage: "/matsuyama-castle/teki/ninja_hashiru.png",
       platforms: [
-        { x: 100, y: 80,  w: 20, h: 20 },
+        { x: 100, y: 80, w: 20, h: 20 },
         { x: 150, y: 190, w: 20, h: 20 },
         { x: 50, y: 300, w: 20, h: 20 },
         { x: 200, y: 410, w: 20, h: 20 },
@@ -162,6 +162,8 @@ export const stage8: StageData = {
         { x: 900, y: 0, w: 25, h: 20 },
       ],
       goal: { x: 640, y: 0 },
+      clearMessage:
+        "愛媛に来たらとりあえず見に来たい\n歴史好きじゃなくても大歓迎！",
       deathMessage: "遠くから見た松山城\nこの距離の写真からでも迫力を感じる",
     },
   ],

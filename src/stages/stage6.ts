@@ -73,6 +73,7 @@ export const stage6: StageData = {
         { x: 750, y: 0, w: 25, h: 20 },
       ],
       deathMessage: "遊子水荷浦の段畑\n宇和海と一緒の絶景が楽しめる",
+      clearMessage: "自然を身近で感じれます\n自然を楽しみに来てみてください！",
       goal: { x: 760, y: 0 },
     },
   ],
