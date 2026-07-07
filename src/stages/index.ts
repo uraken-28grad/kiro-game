@@ -48,6 +48,10 @@ export interface StageData {
   geyserImage?: string
   /** 雫トラップ画像パス（drips使用時） */
   dripImage?: string
+  /** クリア時にGoogle Mapsで表示する目的地（地名や住所、または緯度,経度） */
+  destination?: string
+  /** Google Mapsで表示する経由地（地名や住所、または緯度,経度の配列） */
+  waypoints?: string[]
 }
 
 import { stage1 } from './stage1' //四国中央 新居浜

@@ -134,6 +134,27 @@ function Play() {
               >
                 結果をツイートする
               </a>
+              {stage.destination && (
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(stage.destination)}${stage.waypoints?.length ? `&waypoints=${encodeURIComponent(stage.waypoints.join('|'))}` : ''}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-block',
+                    padding: '10px 20px',
+                    backgroundColor: '#34a853',
+                    color: '#fff',
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    borderRadius: 6,
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    marginTop: 12,
+                  }}
+                >
+                  📍 聖地に行ってみる
+                </a>
+              )}
             </div>
           </div>
         )}
