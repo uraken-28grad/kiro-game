@@ -9,6 +9,9 @@ export const stage1: StageData = {
   goalImage: "/goal-flag.png",
   goalSize: { w: 100, h: 100 },
 
+  destination: "川之江城跡 天守",
+  waypoints: ["旧別子銅山東平地区", "マイントピア別子", "富郷渓谷"],
+
   screens: [
     {
       background: "/niihama/bessi.jpg",
