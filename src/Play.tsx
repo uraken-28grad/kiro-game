@@ -103,7 +103,7 @@ function Play() {
                 GOAL!<br />Congratulations!
               </p>
               {stage.screens.find(s => s.goal)?.clearMessage && (
-                <p style={{ color: '#fff', fontSize: 18, margin: '0 0 12px' }}>
+                <p style={{ color: '#fff', fontSize: 18, margin: '0 0 12px', whiteSpace: 'pre-line' }}>
                   {stage.screens.find(s => s.goal)?.clearMessage}
                 </p>
               )}
