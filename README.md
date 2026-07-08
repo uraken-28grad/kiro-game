@@ -5,7 +5,7 @@
 
 ## デモ
 
-<div><video controls src="https://github.com/uraken-28grad/kiro-game/raw/main/capture.mp4" muted="false"></video></div>
+<div><video controls src="https://github.com/user-attachments/assets/96a54630-1e11-4b93-9c67-90f2f46a83ab.mp4" muted="false"></video></div>
 
 ## 追加機能
 
