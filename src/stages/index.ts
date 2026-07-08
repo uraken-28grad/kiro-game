@@ -22,6 +22,8 @@ export interface Screen {
   hazardSize?: { w: number; h: number }
   /** ゲームオーバー時に表示するメッセージ（未指定時はデフォルトメッセージ） */
   deathMessage?: string
+  /** AI アシスト用の追加プロンプト（未指定時は送信しない） */
+  aiAssistPrompt?: string
   /** ゴール時に表示するメッセージ（未指定時は空） */
   clearMessage?: string
   /** 最終画面のゴール座標（任意。サイズはStageData.goalSizeで指定） */
@@ -48,6 +50,10 @@ export interface StageData {
   geyserImage?: string
   /** 雫トラップ画像パス（drips使用時） */
   dripImage?: string
+  /** クリア時にGoogle Mapsで表示する目的地（地名や住所、または緯度,経度） */
+  destination?: string
+  /** Google Mapsで表示する経由地（地名や住所、または緯度,経度の配列） */
+  waypoints?: string[]
 }
 
 import { stage1 } from './stage1' //四国中央 新居浜

@@ -8,6 +8,15 @@ export const stage3: StageData = {
   hazardSize: { w: 100, h: 150 },
   goalImage: "/goal-flag.png",
   goalSize: { w: 150, h: 150 },
+
+  destination: "嘉母神社",
+  waypoints: [
+    "港記念公園",
+    "新居浜市 一宮神社",
+    "宇和津彦神社",
+    "道後温泉駅前広場",
+  ],
+
   screens: [
     {
       background: "/festival/iyo_mishima.jpg",
@@ -90,7 +99,9 @@ export const stage3: StageData = {
       ],
       deathMessage:
         "西条祭り\n西条市で10/15～10/17に行われる\n深夜に集まるだんじりや神輿、太鼓台がとても綺麗",
-      goal: { x: 1000, y: 0 },
+      clearMessage:
+        "迫力満点の愛媛県のお祭り\n10月に固まっているので遊びに来てください！",
+      goal: { x: 800, y: 0 },
     },
   ],
 };

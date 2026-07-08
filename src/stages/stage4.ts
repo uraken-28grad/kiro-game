@@ -9,6 +9,14 @@ export const stage4: StageData = {
   hazardSize: { w: 200, h: 200 },
   goalImage: "/goal-flag.png",
   goalSize: { w: 150, h: 150 },
+  destination: "嘉母神社",
+  waypoints: [
+    "坊っちゃん劇場",
+    "下灘駅",
+    "四国カルスト県立自然公園 愛媛県エリア",
+    "面河山岳博物館",
+    "塩屋海岸 愛媛県",
+  ],
   screens: [
     {
       background: "/chu-yo/botchan.jpg",
@@ -26,10 +34,7 @@ export const stage4: StageData = {
         { x: 600, y: 250, w: 100, h: 20 },
         { x: 700, y: 300, w: 100, h: 20 },
       ],
-      hazards: [
-        // { x: 190, y: 0, w: 25, h: 20 },
-        { x: 700, y: 0, w: 25, h: 20 },
-      ],
+      hazards: [{ x: 700, y: 0, w: 25, h: 20 }],
       deathMessage:
         "坊ちゃん劇場\n東温市にあるハイレベルなミュージカル劇場\n歴史や偉人をテーマにした作品を上演している",
     },
@@ -42,11 +47,7 @@ export const stage4: StageData = {
         { x: 450, y: 350, w: 60, h: 20 },
         { x: 700, y: 200, w: 150, h: 20 },
       ],
-      hazards: [
-        // { x: 160, y: 0, w: 25, h: 20 },
-        // { x: 340, y: 0, w: 25, h: 20 },
-        { x: 510, y: 0, w: 25, h: 20 },
-      ],
+      hazards: [{ x: 510, y: 0, w: 25, h: 20 }],
       deathMessage:
         "下灘駅\n松山駅から1時間、海を見ることができる駅\n数々のドラマや映画のロケ地として有名",
     },
@@ -105,7 +106,9 @@ export const stage4: StageData = {
       ],
       deathMessage:
         "松前町で運が良ければ見れるだるま夕日\n水平線に溶け込むロマンチックな夕日を恋人とご覧あれ",
-      goal: { x: 950, y: 300 },
+      clearMessage:
+        "中予は観光名所がたくさんあります\n空港からも近く、絶景が楽しめるのでぜひ来てください！",
+      goal: { x: 900, y: 300 },
     },
   ],
 };

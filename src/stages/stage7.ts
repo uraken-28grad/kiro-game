@@ -11,6 +11,7 @@ export const stage7: StageData = {
   goalSize: { w: 50, h: 50 },
   geyserImage: "/matsuyama-dogo/teki/kanketu.png",
   dripImage: "/matsuyama-dogo/teki/water_shizuku.png",
+  destination: "道後温泉",
   screens: [
     {
       background: "/matsuyama-dogo/dougo_ashiyu.jpg",
@@ -65,9 +66,7 @@ export const stage7: StageData = {
         { x: 530, y: 0, w: 25, h: 20 },
       ],
       deathMessage: "浴場",
-      drips: [
-        { x: 480, y: 640, w: 20, h: 30, period: 180 },
-      ],
+      drips: [{ x: 480, y: 640, w: 20, h: 30, period: 180 }],
     },
     {
       background: "/matsuyama-dogo/dougo_heya.jpg",
@@ -93,7 +92,15 @@ export const stage7: StageData = {
       deathMessage:
         "道後温泉の一室\nきれいな和室\n愛媛県に住んでいるが一度は泊まってみたいと思う",
       geysers: [
-        { x: 555, y: 200, w: 50, h: 100, triggerX: 530, interval: 1, duration: 90 },
+        {
+          x: 555,
+          y: 200,
+          w: 50,
+          h: 100,
+          triggerX: 530,
+          interval: 1,
+          duration: 90,
+        },
       ],
     },
     {
@@ -118,9 +125,7 @@ export const stage7: StageData = {
       ],
       deathMessage:
         "お湯につかりながらきれいなプロジェクトマッピングが楽しめる\n男湯にも女湯にもあるらしい\n行ってみたい。。",
-      drips: [
-        { x: 280, y: 640, w: 20, h: 30, period: 120, speed: 7 },
-      ],
+      drips: [{ x: 280, y: 640, w: 20, h: 30, period: 120, speed: 7 }],
     },
     {
       background: "/matsuyama-dogo/dougo_gaikan.jpg",
@@ -143,12 +148,37 @@ export const stage7: StageData = {
         { x: 530, y: 0, w: 25, h: 20 },
       ],
       deathMessage: "松山市にある道後温泉\n外観は趣があって個人的に好き",
+      clearMessage: "愛媛と言えばの道後温泉\n3000年の歴史を楽しみに来てね！",
       goal: { x: 620, y: 0 },
 
       geysers: [
-        { x: 555, y: 200, w: 50, h: 100, triggerX: 500, interval: 1, duration: 90 },
-        { x: 695, y: 140, w: 50, h: 100, triggerX: 650, interval: 1, duration: 90 },
-        { x: 855, y: 100, w: 50, h: 100, triggerX: 800, interval: 1, duration: 90 },
+        {
+          x: 555,
+          y: 200,
+          w: 50,
+          h: 100,
+          triggerX: 500,
+          interval: 1,
+          duration: 90,
+        },
+        {
+          x: 695,
+          y: 140,
+          w: 50,
+          h: 100,
+          triggerX: 650,
+          interval: 1,
+          duration: 90,
+        },
+        {
+          x: 855,
+          y: 100,
+          w: 50,
+          h: 100,
+          triggerX: 800,
+          interval: 1,
+          duration: 90,
+        },
       ],
     },
   ],

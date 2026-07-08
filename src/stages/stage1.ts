@@ -9,6 +9,9 @@ export const stage1: StageData = {
   goalImage: "/goal-flag.png",
   goalSize: { w: 100, h: 100 },
 
+  destination: "川之江城跡 天守",
+  waypoints: ["旧別子銅山東平地区", "マイントピア別子", "富郷渓谷"],
+
   screens: [
     {
       background: "/niihama/bessi.jpg",
@@ -57,7 +60,8 @@ export const stage1: StageData = {
       ],
       hazards: [{ x: 300, y: 0, w: 20, h: 20 }],
       deathMessage: "四国中央市にある川之江城\n天守閣からは絶景が見れるらしい",
-      clearMessage: "おめでとう",
+      clearMessage:
+        "工業の歴史を感じれたり、現役の工場などがあります\n愛媛県の工業都市、ぜひ遊びに来てください！",
       goal: { x: 600, y: 0 },
     },
   ],

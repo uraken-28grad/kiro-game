@@ -64,7 +64,7 @@ function initHazardStates(screen: Screen, groundY: number, renderSize?: { w: num
   })
 }
 
-export function Game({ width, height, stage, onClear, onDeath }: { width: number; height: number; stage: StageData; onClear?: () => void; onDeath?: () => void }) {
+export function Game({ width, height, stage, onClear, onDeath, onReady, paused }: { width: number; height: number; stage: StageData; onClear?: () => void; onDeath?: (screenIndex: number) => void; onReady?: () => void; paused?: boolean }) {
   const playerW = stage.playerSize?.w ?? DEFAULT_PLAYER_W
   const playerH = stage.playerSize?.h ?? DEFAULT_PLAYER_H
   const groundY = height - GROUND_H
@@ -90,31 +90,36 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
     for (const screen of stage.screens) {
       if (screen.hazardImage) hazardSrcs.add(screen.hazardImage)
     }
-    Promise.all([...hazardSrcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
+    const hazardPromise = Promise.all([...hazardSrcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
       setHazardTextures(new Map(entries))
     })
 
     const playerImagePath = stage.playerImage ?? '/animal2.png'
-    Assets.load<Texture>(playerImagePath).then(setPlayerTex)
+    const playerPromise = Assets.load<Texture>(playerImagePath).then(setPlayerTex)
 
+    let goalPromise: Promise<void> = Promise.resolve()
     if (stage.goalImage) {
-      Assets.load<Texture>(stage.goalImage).then(setGoalTex)
+      goalPromise = Assets.load<Texture>(stage.goalImage).then(setGoalTex)
     } else {
       setGoalTex(null)
     }
-  }, [stage])
 
-  // Load background textures for all screens
-  useEffect(() => {
-    const srcs = new Set<string>()
+    // Load background textures for all screens
+    const bgSrcs = new Set<string>()
     for (const screen of stage.screens) {
-      if (screen.background) srcs.add(screen.background)
+      if (screen.background) bgSrcs.add(screen.background)
     }
-    if (srcs.size === 0) return
-    Promise.all([...srcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
-      setBgTextures(new Map(entries))
+    let bgPromise: Promise<void> = Promise.resolve()
+    if (bgSrcs.size > 0) {
+      bgPromise = Promise.all([...bgSrcs].map(src => Assets.load<Texture>(src).then(tex => [src, tex] as const))).then(entries => {
+        setBgTextures(new Map(entries))
+      })
+    }
+
+    Promise.all([hazardPromise, playerPromise, goalPromise, bgPromise]).then(() => {
+      if (onReady) onReady()
     })
-  }, [stage])
+  }, [stage, onReady])
 
   const [state, setState] = useState<GameState>({
     screenIndex: 0,
@@ -162,8 +167,8 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   }, [state.cleared, onClear])
 
   useEffect(() => {
-    if (state.dead && onDeath) onDeath()
-  }, [state.dead, onDeath])
+    if (state.dead && onDeath) onDeath(state.screenIndex)
+  }, [state.dead, state.screenIndex, onDeath])
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -178,6 +183,8 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
   }, [])
 
   const tick = useCallback(() => {
+    if (paused) return
+
     // 間欠泉のサイクルを更新
     geyserTick(playerXRef.current)
 
@@ -348,7 +355,7 @@ export function Game({ width, height, stage, onClear, onDeath }: { width: number
 
       return { screenIndex, playerX, playerY, vy, onGround, dead: false, cleared: false }
     })
-  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision, dripTick, checkDripCollision])
+  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision, dripTick, checkDripCollision, paused])
 
   useTick(tick)
 

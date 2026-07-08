@@ -9,6 +9,8 @@ export const stage6: StageData = {
   hazardSize: { w: 70, h: 70 },
   goalImage: "/goal-flag.png",
   goalSize: { w: 50, h: 50 },
+  destination: "遊子水荷浦の段畑",
+  waypoints: ["高茂岬", "宇和島港戎山防波場灯台", "宇和島城"],
   screens: [
     {
       background: "/uwajima/komomisaki.jpg",
@@ -71,6 +73,7 @@ export const stage6: StageData = {
         { x: 750, y: 0, w: 25, h: 20 },
       ],
       deathMessage: "遊子水荷浦の段畑\n宇和海と一緒の絶景が楽しめる",
+      clearMessage: "自然を身近で感じれます\n自然を楽しみに来てみてください！",
       goal: { x: 760, y: 0 },
     },
   ],
