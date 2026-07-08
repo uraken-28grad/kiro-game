@@ -31,6 +31,10 @@ function Play() {
   const [deathCount, setDeathCount] = useState(0)
   const [elapsedTime, setElapsedTime] = useState(0)
   const startTimeRef = useRef<number>(0)
+  const canvasContainerRef = useRef<HTMLDivElement>(null)
+  const [aiAdvice, setAiAdvice] = useState<string | null>(null)
+  const [aiLoading, setAiLoading] = useState(false)
+  const [isDead, setIsDead] = useState(false)
 
   // ステージが変わったときのみタイマーをリセット＆ローディング状態に戻す
   useEffect(() => {
@@ -48,7 +52,50 @@ function Play() {
     setElapsedTime((Date.now() - startTimeRef.current) / 1000)
     setCleared(true)
   }, [])
-  const handleDeath = useCallback(() => setDeathCount(c => c + 1), [])
+  const sendScreenshot = useCallback((screenIndex?: number) => {
+    const container = canvasContainerRef.current
+    if (!container) return
+    const canvas = container.querySelector('canvas')
+    if (!canvas) return
+    const dataUrl = canvas.toDataURL('image/png')
+
+    // 現在の画面のハザード画像パスを取得
+    const hazardImage = stage.hazardImage ?? '/animal.png'
+
+    // 画面固有のAIアシストプロンプトを取得
+    const aiAssistPrompt = screenIndex != null ? stage.screens[screenIndex]?.aiAssistPrompt : undefined
+
+    setAiAdvice(null)
+    setAiLoading(true)
+
+    fetch('https://bh1o2885xk.execute-api.ap-northeast-1.amazonaws.com/prod/screenshot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        image: dataUrl,
+        stageId: stage.id,
+        stageName: stage.name,
+        hazardImage,
+        ...(aiAssistPrompt && { aiAssistPrompt }),
+      }),
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.advice) {
+          setAiAdvice(result.advice)
+          console.log(`[AI Advice] Stage ${stage.id} "${stage.name}":`, result.advice)
+        }
+      })
+      .catch(error => console.error('Screenshot send failed:', error))
+      .finally(() => setAiLoading(false))
+  }, [stage])
+
+  const handleDeath = useCallback((screenIndex: number) => {
+    setDeathCount(c => c + 1)
+    setIsDead(true)
+    // ゲームオーバー時に自動でスクリーンショットを送信
+    setTimeout(() => sendScreenshot(screenIndex), 100)
+  }, [sendScreenshot])
 
   useEffect(() => {
     const onResize = () => setSize(calcSize())
@@ -66,13 +113,13 @@ function Play() {
     return () => clearInterval(id)
   }, [loading, cleared])
 
-  const handleRetry = () => { setCleared(false); setKey(k => k + 1) }
+  const handleRetry = () => { setCleared(false); setIsDead(false); setAiAdvice(null); setKey(k => k + 1) }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', position: 'relative' }}>
       <p style={{ margin: '0 0 8px' }}>Stage {stage.id}: {stage.name} | 💀 {deathCount} | ⏱ {displayTime.toFixed(2)}秒</p>
-      <div style={{ position: 'relative' }}>
-        <Application width={size.w} height={size.h} background={0x87ceeb}>
+      <div style={{ position: 'relative' }} ref={canvasContainerRef}>
+        <Application width={size.w} height={size.h} background={0x87ceeb} preserveDrawingBuffer={true}>
           <Game key={key} width={size.w} height={size.h} stage={stage} onClear={handleClear} onDeath={handleDeath} onReady={handleReady} paused={loading} />
         </Application>
         {loading && (
@@ -156,6 +203,28 @@ function Play() {
                 </a>
               )}
             </div>
+          </div>
+        )}
+        {isDead && (aiLoading || aiAdvice) && (
+          <div style={{
+            position: 'absolute', bottom: 12, left: '50%', transform: 'translateX(-50%)',
+            width: '80%', maxHeight: '35%', overflowY: 'auto',
+            padding: '10px 16px',
+            backgroundColor: 'rgba(26, 26, 46, 0.95)',
+            borderRadius: 8,
+            border: '1px solid #4a4a6a',
+            zIndex: 5,
+          }}>
+            <p style={{ color: '#ffd700', fontSize: 13, fontWeight: 'bold', margin: '0 0 4px' }}>
+              🤖 AIアドバイス
+            </p>
+            {aiLoading ? (
+              <p style={{ color: '#ccc', fontSize: 13, margin: 0 }}>分析中...</p>
+            ) : (
+              <p style={{ color: '#fff', fontSize: 13, margin: 0, whiteSpace: 'pre-wrap', lineHeight: 1.4 }}>
+                {aiAdvice}
+              </p>
+            )}
           </div>
         )}
       </div>
