@@ -138,7 +138,7 @@ export function Game({ width, height, stage, onClear, onDeath, onReady, paused }
   // 間欠泉hook: 現在の画面のgeysers定義を渡す
   const geyserDefs = useMemo(
     () => stage.screens[state.screenIndex]?.geysers ?? [],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
     [stage, state.screenIndex]
   )
   const { activeGeysers, tick: geyserTick, checkCollision: checkGeyserCollision } = useGeysers(geyserDefs)
@@ -146,7 +146,7 @@ export function Game({ width, height, stage, onClear, onDeath, onReady, paused }
   // 雫トラップhook: 現在の画面のdrips定義を渡す
   const dripDefs = useMemo(
     () => stage.screens[state.screenIndex]?.drips ?? [],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
     [stage, state.screenIndex]
   )
   const { fallingDrips, tick: dripTick, checkCollision: checkDripCollision } = useDrips(dripDefs, groundY)
@@ -235,7 +235,8 @@ export function Game({ width, height, stage, onClear, onDeath, onReady, paused }
 
     setState(prev => {
       if (prev.dead || prev.cleared) return prev
-      let { screenIndex, playerX, playerY, vy, onGround } = prev
+      const { screenIndex } = prev
+      let { playerX, playerY, vy, onGround } = prev
       const currentScreen: Screen = stage.screens[screenIndex]
 
       // Horizontal movement
@@ -355,7 +356,7 @@ export function Game({ width, height, stage, onClear, onDeath, onReady, paused }
 
       return { screenIndex, playerX, playerY, vy, onGround, dead: false, cleared: false }
     })
-  }, [width, height, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision, dripTick, checkDripCollision, paused])
+  }, [width, groundY, stage, movingHazards, playerW, playerH, geyserTick, checkGeyserCollision, dripTick, checkDripCollision, paused])
 
   useTick(tick)
 
